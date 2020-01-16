@@ -10,5 +10,8 @@ package ferreteria.model;
  * @author lusiu
  */
 public class ModeloFerreteria {
+
+    public ModeloFerreteria() {
+    }
     
 }
