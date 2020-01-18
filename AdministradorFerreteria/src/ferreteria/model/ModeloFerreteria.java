@@ -5,11 +5,13 @@
  */
 package ferreteria.model;
 
+import java.util.Observable;
+
 /**
  *
  * @author lusiu
  */
-public class ModeloFerreteria {
+public class ModeloFerreteria extends Observable{
 
     public ModeloFerreteria() {
     }

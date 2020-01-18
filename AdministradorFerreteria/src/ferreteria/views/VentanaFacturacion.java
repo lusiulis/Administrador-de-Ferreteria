@@ -5,11 +5,53 @@
  */
 package ferreteria.views;
 
+import ferrateria.control.ControlFerreteria;
+import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.Observable;
+import java.util.Observer;
+
 /**
  *
  * @author Kevin
  */
-public class VentanaFacturacion extends javax.swing.JFrame {
+public class VentanaFacturacion extends javax.swing.JFrame implements Observer {
+
+    private ControlFerreteria gestor;
+
+    public VentanaFacturacion(ControlFerreteria gestor) {
+        this.gestor = gestor;
+    }
+
+    public void init() {
+        gestor.registrar(this);
+        initComponents();
+        configurar();
+        setVisible(true);
+    }
+
+    private void configurar() {
+        setResizable(false);
+        addWindowListener(new WindowAdapter() {
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                cerrarVentana();
+            }
+
+        });
+        itemSalir.addActionListener((ActionEvent e) -> {
+            cerrarVentana();
+        });
+        itemEditarInventario.addActionListener((ActionEvent e) -> {
+            new VentanaInventario(gestor).init();
+        });
+    }
+
+    private void cerrarVentana() {
+        gestor.cerrarAplicacion();
+    }
 
     /**
      * Creates new form VentanaFacturacion
@@ -412,4 +454,8 @@ public class VentanaFacturacion extends javax.swing.JFrame {
     private javax.swing.JTextField txfCodigoArticulo;
     private javax.swing.JTextField txfVendedor;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void update(Observable o, Object arg) {
+    }
 }

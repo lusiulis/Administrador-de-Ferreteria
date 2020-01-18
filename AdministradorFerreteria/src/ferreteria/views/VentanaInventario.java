@@ -1,17 +1,40 @@
-
 package ferreteria.views;
 
 import ferrateria.control.ControlFerreteria;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.Observable;
+import java.util.Observer;
 
+public class VentanaInventario extends javax.swing.JFrame implements Observer {
 
-public class Ventana extends javax.swing.JFrame {
-
- 
-    public Ventana(ControlFerreteria gestor) {
+    public VentanaInventario(ControlFerreteria gestor) {
         initComponents();
         setVisible(true);
         setLocationRelativeTo(null);
         this.gestor = gestor;
+    }
+
+    public void init() {
+        gestor.registrar(this);
+        configurar();
+    }
+
+    private void configurar() {
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        addWindowListener(new WindowAdapter() {
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                cerrarVentana();
+            }
+
+        });
+    }
+
+    private void cerrarVentana() {
+        gestor.suprimir(this);
+        dispose();
     }
 
     @SuppressWarnings("unchecked")
@@ -134,4 +157,8 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cmbTipo;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void update(Observable o, Object arg) {
+    }
 }
