@@ -4,10 +4,10 @@ package ferreteria.views;
 import ferrateria.control.ControlFerreteria;
 
 
-public class Ventana extends javax.swing.JFrame {
+public class VentanaInventario extends javax.swing.JFrame {
 
  
-    public Ventana(ControlFerreteria gestor) {
+    public VentanaInventario(ControlFerreteria gestor) {
         initComponents();
         setVisible(true);
         setLocationRelativeTo(null);
