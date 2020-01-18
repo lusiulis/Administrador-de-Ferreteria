@@ -1,7 +1,6 @@
 package administradorferreteria;
 
 import ferrateria.control.ControlFerreteria;
-import ferreteria.views.VentanaInventario;
 import ferreteria.views.VentanaFacturacion;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
