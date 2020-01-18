@@ -3,22 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package administradorferreteria;
+package ferreteria.model.entidades;
 
 /**
  *
  * @author lusiu
  */
-public class tipo {
+public class TipoProducto {
     private int id;
     private String tipo;
     private double Longitud;
     private String CapacidadTrabajo;
 
-    public tipo() {
+    public TipoProducto() {
     }
 
-    public tipo(int id, String tipo, double Longitud, String CapacidadTrabajo) {
+    public TipoProducto(int id, String tipo, double Longitud, String CapacidadTrabajo) {
         this.id = id;
         this.tipo = tipo;
         this.Longitud = Longitud;
