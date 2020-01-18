@@ -17,7 +17,7 @@ public class AdministradorFerreteria {
         } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException e) {
             System.err.println("Error: " + e.getLocalizedMessage());
         }
-
+        xD xd = new xD();
         new AdministradorFerreteria().iniciar();
     }
 
