@@ -4,8 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Factura implements Serializable{
-    
+public class Factura implements Serializable {
+
     private int id;
     private String Fecha;
     private String Vendedor;
@@ -13,7 +13,8 @@ public class Factura implements Serializable{
     private double SubTotal;
     private double Impuesto;
     private double Descuento;
-    
+    private final Double IMPUESTO = 0.13;//porcentaje de impuesto
+
     private List<Producto> productos;
 
     public Factura() {
@@ -102,6 +103,16 @@ public class Factura implements Serializable{
 
     public void agregarProducto(Producto producto) {
         this.productos.add(producto);
+        actualizarTotales();
     }
-    
+
+    public void actualizarTotales() {
+        SubTotal = 0;
+        for (Producto p : productos) {
+            SubTotal += p.getPrecio() * p.getCantidad();
+        }
+        Impuesto = SubTotal * IMPUESTO;
+        Total = SubTotal + Impuesto;
+    }
+
 }

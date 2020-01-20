@@ -51,4 +51,9 @@ public class ControlFerreteria {
     public void solicitarFacturaActual() {
         modelo.getFacturaActual();
     }
+    
+    
+     public void eliminarArticulo(Integer numeroArt){
+        modelo.eliminarArticulo(numeroArt);
+    }
 }

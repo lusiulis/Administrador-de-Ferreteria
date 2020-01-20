@@ -56,7 +56,7 @@ public class VentanaFacturacion extends javax.swing.JFrame implements Observer {
         itemEditarInventario.addActionListener((ActionEvent e) -> {
             new VentanaInventario(gestor).init();
         });
-         String[] nombreColumnas
+        String[] nombreColumnas
                 = {"Articulo",
                     "Cantidad",
                     "Precio Individual",
@@ -382,7 +382,11 @@ public class VentanaFacturacion extends javax.swing.JFrame implements Observer {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
+        if (tablaArticulos.getSelectedRow() != -1) {
+            //gestor.eliminarArticulo((String) tablaArticulos.getValueAt(tablaArticulos.getSelectedRow(), 0));
+            gestor.eliminarArticulo(tablaArticulos.getSelectedRow());
+        }
+
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void txfCodigoArticuloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfCodigoArticuloActionPerformed
@@ -499,16 +503,22 @@ public class VentanaFacturacion extends javax.swing.JFrame implements Observer {
         lblSubtotal.setText("Subtotal: " + String.valueOf(facturaNueva.getSubTotal()));
         lblTotal.setText("Total: " + String.valueOf(facturaNueva.getTotal()));
         lblImpuesto.setText("Impuesto: " + String.valueOf(facturaNueva.getImpuesto()));
-        
+
         //actualizar lista
         actualizarListaProductos(facturaNueva.getProductos());
+        
+        //reset campos
+        txfCantidad.setValue(1);
+        txfCodigoArticulo.setText("");
     }
-    
-    private void actualizarListaProductos(List<Producto> lista){
+
+    private void actualizarListaProductos(List<Producto> lista) {
         modeloTabla.setRowCount(0);
-        for(Producto p: lista){
-            Object[] datos={p.getNombre(),p.getCantidad(),p.getPrecio(),p.getPrecio()*p.getCantidad()};
+        for (Producto p : lista) {
+            Object[] datos = {p.getNombre(), p.getCantidad(), p.getPrecio(), p.getPrecio() * p.getCantidad()};
             modeloTabla.addRow(datos);
         }
     }
+
+    
 }
