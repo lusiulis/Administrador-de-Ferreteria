@@ -1,16 +1,100 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ferreteria.model.entidades;
 
 import java.io.Serializable;
 
-/**
- *
- * @author Kevin
- */
 public class Producto implements Serializable {
+    
+    private int id;
+    private String Nombre;
+    private double Precio;
+    private int Cantidad;
+    private String Descripcion;
+    private String Provedor;
+    private int idTipo;
+    private int idFactura;
+
+    public Producto() {
+    }
+
+    public Producto(int id, String Nombre, double Precio, int Cantidad, String Descripcion, String Provedor, int idTipo, int idFactura) {
+        this.id = id;
+        this.Nombre = Nombre;
+        this.Precio = Precio;
+        this.Cantidad = Cantidad;
+        this.Descripcion = Descripcion;
+        this.Provedor = Provedor;
+        this.idTipo = idTipo;
+        this.idFactura = idFactura;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return Nombre;
+    }
+
+    public void setNombre(String Nombre) {
+        this.Nombre = Nombre;
+    }
+
+    public double getPrecio() {
+        return Precio;
+    }
+
+    public void setPrecio(double Precio) {
+        this.Precio = Precio;
+    }
+
+    public int getCantidad() {
+        return Cantidad;
+    }
+
+    public void setCantidad(int Cantidad) {
+        this.Cantidad = Cantidad;
+    }
+
+    public String getDescripcion() {
+        return Descripcion;
+    }
+
+    public void setDescripcion(String Descripcion) {
+        this.Descripcion = Descripcion;
+    }
+
+    public String getProvedor() {
+        return Provedor;
+    }
+
+    public void setProvedor(String Provedor) {
+        this.Provedor = Provedor;
+    }
+
+    public int getIdTipo() {
+        return idTipo;
+    }
+
+    public void setIdTipo(int idTipo) {
+        this.idTipo = idTipo;
+    }
+
+    public int getIdFactura() {
+        return idFactura;
+    }
+
+    public void setIdFactura(int idFactura) {
+        this.idFactura = idFactura;
+    }
+
+    @Override
+    public String toString() {
+        return "Producto{" + "id=" + id + ", Nombre=" + Nombre + ", Precio=" + Precio + ", Cantidad=" + Cantidad + ", Descripcion=" + Descripcion + ", Provedor=" + Provedor + ", idTipo=" + idTipo + ", idFactura=" + idFactura + '}';
+    }
+    
     
 }
