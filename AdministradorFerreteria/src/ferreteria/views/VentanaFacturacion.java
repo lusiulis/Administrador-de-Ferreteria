@@ -6,11 +6,18 @@
 package ferreteria.views;
 
 import ferrateria.control.ControlFerreteria;
+import ferreteria.model.entidades.Factura;
+import ferreteria.model.entidades.Producto;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.text.ParseException;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -19,6 +26,7 @@ import java.util.Observer;
 public class VentanaFacturacion extends javax.swing.JFrame implements Observer {
 
     private ControlFerreteria gestor;
+    private DefaultTableModel modeloTabla;
 
     public VentanaFacturacion(ControlFerreteria gestor) {
         this.gestor = gestor;
@@ -29,6 +37,7 @@ public class VentanaFacturacion extends javax.swing.JFrame implements Observer {
         initComponents();
         configurar();
         setVisible(true);
+        gestor.solicitarFacturaActual();
     }
 
     private void configurar() {
@@ -47,6 +56,15 @@ public class VentanaFacturacion extends javax.swing.JFrame implements Observer {
         itemEditarInventario.addActionListener((ActionEvent e) -> {
             new VentanaInventario(gestor).init();
         });
+         String[] nombreColumnas
+                = {"Articulo",
+                    "Cantidad",
+                    "Precio Individual",
+                    "Total"
+                };
+
+        modeloTabla = new DefaultTableModel(nombreColumnas, 0);
+        tablaArticulos.setModel(modeloTabla);
     }
 
     private void cerrarVentana() {
@@ -85,11 +103,10 @@ public class VentanaFacturacion extends javax.swing.JFrame implements Observer {
         lblSubtotal = new javax.swing.JLabel();
         lblImpuesto = new javax.swing.JLabel();
         lblTotal = new javax.swing.JLabel();
-        jSpinner1 = new javax.swing.JSpinner();
+        txfCantidad = new javax.swing.JSpinner();
         lblCantidad = new javax.swing.JLabel();
         txfVendedor = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        jPanel5 = new javax.swing.JPanel();
         lblMensaje = new javax.swing.JLabel();
         Menu = new javax.swing.JMenuBar();
         MenuArchivo = new javax.swing.JMenu();
@@ -236,7 +253,7 @@ public class VentanaFacturacion extends javax.swing.JFrame implements Observer {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(lblCantidad)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txfCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnAgregar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -264,7 +281,7 @@ public class VentanaFacturacion extends javax.swing.JFrame implements Observer {
                     .addComponent(txfCodigoArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAgregar)
                     .addComponent(lblCodigo)
-                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txfCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblCantidad)
                     .addComponent(txfVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
@@ -285,17 +302,6 @@ public class VentanaFacturacion extends javax.swing.JFrame implements Observer {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnVender)
                     .addComponent(btnCancelar)))
-        );
-
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 824, Short.MAX_VALUE)
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 42, Short.MAX_VALUE)
         );
 
         lblMensaje.setText("Promedio: ");
@@ -332,13 +338,11 @@ public class VentanaFacturacion extends javax.swing.JFrame implements Observer {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 904, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createSequentialGroup()
                             .addContainerGap()
-                            .addComponent(lblMensaje)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(lblMensaje)))
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 801, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
@@ -349,10 +353,9 @@ public class VentanaFacturacion extends javax.swing.JFrame implements Observer {
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblMensaje)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblMensaje)
+                .addGap(26, 26, 26))
         );
 
         pack();
@@ -367,11 +370,15 @@ public class VentanaFacturacion extends javax.swing.JFrame implements Observer {
     }//GEN-LAST:event_itemEditarInventarioActionPerformed
 
     private void btnVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenderActionPerformed
-        // TODO add your handling code here:
+        try {
+            gestor.vender(txfVendedor.getText());
+        } catch (NullPointerException e) {
+            gestor.vender(" ");
+        }
     }//GEN-LAST:event_btnVenderActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
+        gestor.cancelarFactura();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
@@ -383,9 +390,35 @@ public class VentanaFacturacion extends javax.swing.JFrame implements Observer {
     }//GEN-LAST:event_txfCodigoArticuloActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        // TODO add your handling code here:
+        if (camposValidos()) {
+            gestor.agregarProducto(Integer.valueOf(txfCodigoArticulo.getText()), Integer.valueOf((Integer) txfCantidad.getValue()));
+        } else {
+            JOptionPane.showMessageDialog(null, "Existe un error con el campo de codigo o el campo de cantidad.");
+        }
     }//GEN-LAST:event_btnAgregarActionPerformed
 
+    private Boolean camposValidos() {
+        Boolean todoBien = true;
+        //revisar que el campo de articulo este bien
+        if (txfCodigoArticulo.getText() != null) {
+            try {
+                Integer.valueOf(txfCodigoArticulo.getText());
+            } catch (NumberFormatException e) {
+                todoBien = false;
+            }
+        }
+        try {
+            //revisar que el campo de cantidad este bien
+            txfCantidad.commitEdit();
+            if ((Integer) txfCantidad.getValue() <= 0) {
+                todoBien = false;
+            }
+        } catch (ParseException ex) {
+            todoBien = false;
+        }
+
+        return todoBien;
+    }
     private void txfVendedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfVendedorActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txfVendedorActionPerformed
@@ -440,10 +473,8 @@ public class VentanaFacturacion extends javax.swing.JFrame implements Observer {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSpinner jSpinner1;
     private javax.swing.JLabel lblCantidad;
     private javax.swing.JLabel lblCodigo;
     private javax.swing.JLabel lblImpuesto;
@@ -451,11 +482,33 @@ public class VentanaFacturacion extends javax.swing.JFrame implements Observer {
     private javax.swing.JLabel lblSubtotal;
     private javax.swing.JLabel lblTotal;
     private javax.swing.JTable tablaArticulos;
+    private javax.swing.JSpinner txfCantidad;
     private javax.swing.JTextField txfCodigoArticulo;
     private javax.swing.JTextField txfVendedor;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void update(Observable o, Object arg) {
+        if (arg instanceof Factura) {
+            actualizoFactura((Factura) arg);
+        }
+    }
+
+    private void actualizoFactura(Factura facturaNueva) {
+        //actualizar montos
+        lblSubtotal.setText("Subtotal: " + String.valueOf(facturaNueva.getSubTotal()));
+        lblTotal.setText("Total: " + String.valueOf(facturaNueva.getTotal()));
+        lblImpuesto.setText("Impuesto: " + String.valueOf(facturaNueva.getImpuesto()));
+        
+        //actualizar lista
+        actualizarListaProductos(facturaNueva.getProductos());
+    }
+    
+    private void actualizarListaProductos(List<Producto> lista){
+        modeloTabla.setRowCount(0);
+        for(Producto p: lista){
+            Object[] datos={p.getNombre(),p.getCantidad(),p.getPrecio(),p.getPrecio()*p.getCantidad()};
+            modeloTabla.addRow(datos);
+        }
     }
 }

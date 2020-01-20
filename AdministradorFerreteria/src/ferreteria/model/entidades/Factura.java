@@ -99,5 +99,9 @@ public class Factura implements Serializable{
     public String toString() {
         return "Factura{" + "id=" + id + ", Fecha=" + Fecha + ", Vendedor=" + Vendedor + ", Total=" + Total + ", SubTotal=" + SubTotal + ", Impuesto=" + Impuesto + ", Descuento=" + Descuento + ", productos=" + productos + '}';
     }
+
+    public void agregarProducto(Producto producto) {
+        this.productos.add(producto);
+    }
     
 }

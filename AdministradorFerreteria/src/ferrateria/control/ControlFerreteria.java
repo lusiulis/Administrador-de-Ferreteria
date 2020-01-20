@@ -6,7 +6,6 @@
 package ferrateria.control;
 
 import ferreteria.model.ModeloFerreteria;
-import ferreteria.views.VentanaFacturacion;
 import java.util.Observer;
 
 /**
@@ -36,5 +35,20 @@ public class ControlFerreteria {
             System.exit(0);
         }
     }
+    
+    public void agregarProducto(Integer codigo, Integer cantidad){
+        modelo.agregarProducto(codigo,cantidad);
+    }
+    
+    public void cancelarFactura(){
+        modelo.cancelarFactura();
+    }
+    
+    public void vender(String vendedor){
+        modelo.vender();
+    }
 
+    public void solicitarFacturaActual() {
+        modelo.getFacturaActual();
+    }
 }
