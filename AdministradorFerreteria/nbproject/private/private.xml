@@ -3,8 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/DATA/OneDrive/Documentos/Git/Administrador-de-Ferreteria/AdministradorFerreteria/src/administradorferreteria/AdministradorFerreteria.java</file>
-            <file>file:/D:/DATA/OneDrive/Documentos/Git/Administrador-de-Ferreteria/AdministradorFerreteria/src/administradorferreteria/tipo.java</file>
+            <file>file:/C:/Programacion/Verano/Proyecto%202/Administrador-de-Ferreteria/AdministradorFerreteria/src/administradorferreteria/AdministradorFerreteria.java</file>
+            <file>file:/C:/Programacion/Verano/Proyecto%202/Administrador-de-Ferreteria/AdministradorFerreteria/src/ferreteria/views/VentanaInventario.java</file>
+            <file>file:/C:/Programacion/Verano/Proyecto%202/Administrador-de-Ferreteria/AdministradorFerreteria/src/ferreteria/views/VentanaFacturacion.java</file>
+            <file>file:/C:/Programacion/Verano/Proyecto%202/Administrador-de-Ferreteria/AdministradorFerreteria/src/ferreteria/model/entidades/Producto.java</file>
         </group>
     </open-files>
 </project-private>
