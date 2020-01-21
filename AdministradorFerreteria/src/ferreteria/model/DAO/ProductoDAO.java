@@ -1,7 +1,6 @@
 package ferreteria.model.DAO;
 
 import ferreteria.model.entidades.Producto;
-import ferreteria.model.entidades.TipoProducto;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -33,7 +32,7 @@ public class ProductoDAO {
         }
     }
     
-    public ProductoDAO getInstancia(){
+    public static ProductoDAO getInstancia(){
         if(instancia == null){
             instancia = new ProductoDAO();
         }
@@ -88,6 +87,54 @@ public class ProductoDAO {
         return r;
     }
     
+    public List<Producto> listarIdTipo(int i) throws SQLException {
+        List<Producto> r = new ArrayList<>();
+
+        try (Connection cnx = getConexion();
+             PreparedStatement stm = cnx.prepareStatement(CMD_LISTAR_IDTIPO);) {
+            
+            stm.setInt(1, i);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                r.add(new Producto(
+                        rs.getInt("idProducto"),
+                        rs.getString("Nombre"),
+                        rs.getDouble("Precio"),
+                        rs.getInt("Cantidad"),
+                        rs.getString("Descripcion"),
+                        rs.getString("Provedor"),
+                        rs.getInt("idTipo"),
+                        rs.getInt("idFactura")
+                ));
+            }
+        }
+        return r;
+    }
+    
+    public List<Producto> listarIdFactura(int i) throws SQLException {
+        List<Producto> r = new ArrayList<>();
+
+        try (Connection cnx = getConexion();
+             PreparedStatement stm = cnx.prepareStatement(CMD_LISTAR_IDFACTURA);) {
+            
+            stm.setInt(1, i);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                r.add(new Producto(
+                        rs.getInt("idProducto"),
+                        rs.getString("Nombre"),
+                        rs.getDouble("Precio"),
+                        rs.getInt("Cantidad"),
+                        rs.getString("Descripcion"),
+                        rs.getString("Provedor"),
+                        rs.getInt("idTipo"),
+                        rs.getInt("idFactura")
+                ));
+            }
+        }
+        return r;
+    }
+    
     public boolean Borrar(int i) throws SQLException{
          boolean exito = false;
          
@@ -108,6 +155,12 @@ public class ProductoDAO {
     private static final String CMD_LISTAR
             = "SELECT idProducto, Nombre, Precio, Cantidad, Descripcion, Provedor, idTipo, idFactura FROM producto;";
 
+    private static final String CMD_LISTAR_IDTIPO
+            = "SELECT idProducto, Nombre, Precio, Cantidad, Descripcion, Provedor, idTipo, idFactura FROM producto where idTipo=?;";
+    
+    private static final String CMD_LISTAR_IDFACTURA
+            = "SELECT idProducto, Nombre, Precio, Cantidad, Descripcion, Provedor, idTipo, idFactura FROM producto where idFactura=?;";
+    
     private static final String CMD_BORRAR
             = "delete from producto where idProducto=?";
 }

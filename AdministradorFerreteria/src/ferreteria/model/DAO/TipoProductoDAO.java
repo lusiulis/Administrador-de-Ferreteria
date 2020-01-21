@@ -29,6 +29,7 @@ public class TipoProductoDAO {
     
      private static final String CMD_BORRAR
             = "delete from tipo where idTipo=?";
+     
      public static TipoProductoDAO getInstancia(){
         if (instancia == null) {
             instancia = new TipoProductoDAO();
