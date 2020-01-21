@@ -17,7 +17,7 @@ import static javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE;
  *
  * @author Kevin
  */
-public class VentanaCrearOModificar extends javax.swing.JFrame implements Observer{
+public class VentanaCrearOModificar extends javax.swing.JFrame implements Observer {
 
     private ControlFerreteria gestor;
     private Producto productoSinModificar;
@@ -39,8 +39,19 @@ public class VentanaCrearOModificar extends javax.swing.JFrame implements Observ
     public VentanaCrearOModificar(ControlFerreteria gestor, Producto productoAModificar) {
         initComponents();
         this.gestor = gestor;
-        this.productoSinModificar = productoAModificar;
+        this.productoSinModificar = new Producto(productoAModificar);
         this.productoNuevo = new Producto(productoSinModificar);
+        if (1 > 0) {//este if debe ser con el tipo de herramienta que es el producto
+            btnMaterial.setSelected(true);
+            btnHerramienta.setVisible(false);
+        } else {
+            btnHerramienta.setSelected(true);
+            btnMaterial.setVisible(false);
+        }
+        this.txfID.setText(String.valueOf(productoSinModificar.getId()));
+        this.txfPrecio.setText(String.valueOf(productoSinModificar.getPrecio()));
+        this.txfCantidad.setText(String.valueOf(productoSinModificar.getCantidad()));
+        this.txfProvedor.setText(productoSinModificar.getProvedor());
     }
 
     /**
@@ -52,21 +63,265 @@ public class VentanaCrearOModificar extends javax.swing.JFrame implements Observ
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
+        lblID = new javax.swing.JLabel();
+        txfNombre = new javax.swing.JTextField();
+        lblNombre = new javax.swing.JLabel();
+        txfID = new javax.swing.JTextField();
+        lblProvedor = new javax.swing.JLabel();
+        txfProvedor = new javax.swing.JTextField();
+        lblPrecio = new javax.swing.JLabel();
+        txfPrecio = new javax.swing.JTextField();
+        lblCantidad = new javax.swing.JLabel();
+        txfCantidad = new javax.swing.JTextField();
+        btnAceptar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
+        btnHerramienta = new javax.swing.JRadioButton();
+        lblAnchura = new javax.swing.JLabel();
+        btnMaterial = new javax.swing.JRadioButton();
+        lblCapacidadDeTrabajo = new javax.swing.JLabel();
+        cmbCapacidadTrabajo = new javax.swing.JComboBox<>();
+        txfAnchura = new javax.swing.JTextField();
+        txfLongitud = new javax.swing.JTextField();
+        lblLongitud = new javax.swing.JLabel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Inventario - UNA");
+        setPreferredSize(new java.awt.Dimension(600, 500));
+
+        lblID.setText("ID:");
+
+        txfNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txfNombreActionPerformed(evt);
+            }
+        });
+
+        lblNombre.setText("Nombre:");
+
+        txfID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txfIDActionPerformed(evt);
+            }
+        });
+
+        lblProvedor.setText("Provedor:");
+
+        txfProvedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txfProvedorActionPerformed(evt);
+            }
+        });
+
+        lblPrecio.setText("Precio:");
+
+        txfPrecio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txfPrecioActionPerformed(evt);
+            }
+        });
+
+        lblCantidad.setText("Cantidad:");
+
+        txfCantidad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txfCantidadActionPerformed(evt);
+            }
+        });
+
+        btnAceptar.setText("Aceptar");
+        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAceptarActionPerformed(evt);
+            }
+        });
+
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(btnHerramienta);
+        btnHerramienta.setSelected(true);
+        btnHerramienta.setText("Herramienta");
+        btnHerramienta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHerramientaActionPerformed(evt);
+            }
+        });
+
+        lblAnchura.setText("Anchura:");
+
+        buttonGroup1.add(btnMaterial);
+        btnMaterial.setText("Material");
+        btnMaterial.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMaterialActionPerformed(evt);
+            }
+        });
+
+        lblCapacidadDeTrabajo.setText("Capacidad de Trabajo:");
+
+        cmbCapacidadTrabajo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        lblLongitud.setText("Longitud:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnCancelar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnAceptar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(lblLongitud)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(txfLongitud, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(lblAnchura)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(txfAnchura, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblCapacidadDeTrabajo)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cmbCapacidadTrabajo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(lblNombre)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(lblID)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txfID, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(lblPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txfPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(95, 95, 95)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(btnHerramienta)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnMaterial))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(lblProvedor)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txfProvedor, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(lblCantidad)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txfCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(0, 21, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(78, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblID)
+                    .addComponent(txfID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnHerramienta)
+                    .addComponent(btnMaterial))
+                .addGap(43, 43, 43)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblNombre)
+                    .addComponent(txfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblProvedor)
+                    .addComponent(txfProvedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(49, 49, 49)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblPrecio)
+                    .addComponent(txfPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblCantidad)
+                    .addComponent(txfCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(35, 35, 35)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cmbCapacidadTrabajo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblCapacidadDeTrabajo))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txfAnchura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblAnchura))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblLongitud)
+                    .addComponent(txfLongitud, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(84, 84, 84)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAceptar)
+                    .addComponent(btnCancelar))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void txfNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfNombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txfNombreActionPerformed
+
+    private void txfIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfIDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txfIDActionPerformed
+
+    private void txfProvedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfProvedorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txfProvedorActionPerformed
+
+    private void txfPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfPrecioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txfPrecioActionPerformed
+
+    private void txfCantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfCantidadActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txfCantidadActionPerformed
+
+    private void btnMaterialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMaterialActionPerformed
+        setTipoProducto();
+    }//GEN-LAST:event_btnMaterialActionPerformed
+
+    private void btnHerramientaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHerramientaActionPerformed
+        setTipoProducto();
+    }//GEN-LAST:event_btnHerramientaActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        cerrarVentana();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
+        
+    }//GEN-LAST:event_btnAceptarActionPerformed
+
+    private void setTipoProducto() {
+        if (btnHerramienta.isSelected()) {
+            lblCapacidadDeTrabajo.setVisible(true);
+            cmbCapacidadTrabajo.setVisible(true);
+            lblLongitud.setVisible(false);
+            txfLongitud.setVisible(false);
+            lblAnchura.setVisible(false);
+            txfAnchura.setVisible(false);
+        } else {
+            lblCapacidadDeTrabajo.setVisible(false);
+            cmbCapacidadTrabajo.setVisible(false);
+            lblLongitud.setVisible(true);
+            txfLongitud.setVisible(true);
+            lblAnchura.setVisible(true);
+            txfAnchura.setVisible(true);
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -120,6 +375,13 @@ public class VentanaCrearOModificar extends javax.swing.JFrame implements Observ
 
         });
         setResizable(false);
+        setLocationRelativeTo(null);
+        setTipoProducto();
+        txfID.setEditable(false);
+        cmbCapacidadTrabajo.removeAllItems();
+        cmbCapacidadTrabajo.addItem("Liviano");
+        cmbCapacidadTrabajo.addItem("Mediano");
+        cmbCapacidadTrabajo.addItem("Pesado");
     }
 
     private void cerrarVentana() {
@@ -133,5 +395,26 @@ public class VentanaCrearOModificar extends javax.swing.JFrame implements Observ
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAceptar;
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JRadioButton btnHerramienta;
+    private javax.swing.JRadioButton btnMaterial;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JComboBox<String> cmbCapacidadTrabajo;
+    private javax.swing.JLabel lblAnchura;
+    private javax.swing.JLabel lblCantidad;
+    private javax.swing.JLabel lblCapacidadDeTrabajo;
+    private javax.swing.JLabel lblID;
+    private javax.swing.JLabel lblLongitud;
+    private javax.swing.JLabel lblNombre;
+    private javax.swing.JLabel lblPrecio;
+    private javax.swing.JLabel lblProvedor;
+    private javax.swing.JTextField txfAnchura;
+    private javax.swing.JTextField txfCantidad;
+    private javax.swing.JTextField txfID;
+    private javax.swing.JTextField txfLongitud;
+    private javax.swing.JTextField txfNombre;
+    private javax.swing.JTextField txfPrecio;
+    private javax.swing.JTextField txfProvedor;
     // End of variables declaration//GEN-END:variables
 }

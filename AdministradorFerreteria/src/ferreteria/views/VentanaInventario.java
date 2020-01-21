@@ -76,6 +76,7 @@ public class VentanaInventario extends javax.swing.JFrame implements Observer {
         txfNombreProducto = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setLocationByPlatform(true);
 
         Tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
