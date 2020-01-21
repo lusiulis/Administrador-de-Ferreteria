@@ -7,8 +7,11 @@ public class TipoProducto implements Serializable{
     private String tipo;
     private double Longitud;
     private String CapacidadTrabajo;
-
+    
+    private Producto producto;
+    
     public TipoProducto() {
+        producto = new Producto();
     }
 
     public TipoProducto(int id, String tipo, double Longitud, String CapacidadTrabajo) {

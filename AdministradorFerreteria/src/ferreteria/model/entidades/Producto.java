@@ -13,7 +13,12 @@ public class Producto implements Serializable {
     private int idTipo;
     private int idFactura;
 
+    private TipoProducto tipo;
+    private Factura factura;
+    
     public Producto() {
+        tipo = new TipoProducto();
+        factura = new Factura();
     }
 
     public Producto(int id, String Nombre, double Precio, int Cantidad, String Descripcion, String Provedor, int idTipo, int idFactura) {
