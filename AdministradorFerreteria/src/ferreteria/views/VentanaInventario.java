@@ -5,8 +5,11 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Observable;
 import java.util.Observer;
+import javax.swing.table.DefaultTableModel;
 
 public class VentanaInventario extends javax.swing.JFrame implements Observer {
+   
+    private DefaultTableModel modeloTabla;
 
     public VentanaInventario(ControlFerreteria gestor) {
         initComponents();
@@ -30,6 +33,25 @@ public class VentanaInventario extends javax.swing.JFrame implements Observer {
             }
 
         });
+        setResizable(false);
+        cmbTipo.removeAllItems();
+        cmbTipo.addItem("Ambos");
+        cmbTipo.addItem("Herramientas");
+        cmbTipo.addItem("Materiales");
+        String[] nombreColumnas
+                = {"ID",
+                    "Nombre",
+                    "Descripcion",
+                    "Provedor",
+                    "Cantidad",
+                    "Precio",
+                    "Longitud",
+                    "Anchura",
+                    "Capacidad de trabajo"
+                };
+        
+        modeloTabla = new DefaultTableModel(nombreColumnas,0);
+        Tabla.setModel(modeloTabla);
     }
 
     private void cerrarVentana() {
@@ -48,6 +70,9 @@ public class VentanaInventario extends javax.swing.JFrame implements Observer {
         btnEliminar = new javax.swing.JButton();
         btnBuscar = new javax.swing.JButton();
         cmbTipo = new javax.swing.JComboBox<>();
+        lblTipoBusqueda = new javax.swing.JLabel();
+        lblNombre = new javax.swing.JLabel();
+        txfNombreProducto = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -87,6 +112,11 @@ public class VentanaInventario extends javax.swing.JFrame implements Observer {
         jScrollPane1.setViewportView(Tabla);
 
         btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
 
         btnAgregar.setText("Agregar");
 
@@ -101,42 +131,54 @@ public class VentanaInventario extends javax.swing.JFrame implements Observer {
             }
         });
 
+        lblTipoBusqueda.setText("Tipo de Busqueda:");
+
+        lblNombre.setText("Nombre:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(553, 553, 553)
+                .addGap(28, 28, 28)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnEliminar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnModificar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnAgregar))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 800, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblNombre)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txfNombreProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(25, 25, 25)
+                        .addComponent(lblTipoBusqueda)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cmbTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnEliminar)
-                        .addGap(36, 36, 36)
-                        .addComponent(btnAgregar)
-                        .addGap(37, 37, 37)
-                        .addComponent(btnModificar))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 754, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(24, Short.MAX_VALUE))
+                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(17, 17, 17)
+                .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnBuscar)
-                    .addComponent(cmbTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(cmbTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblTipoBusqueda)
+                    .addComponent(lblNombre)
+                    .addComponent(txfNombreProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 447, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnModificar)
                     .addComponent(btnAgregar)
-                    .addComponent(btnEliminar))
-                .addGap(35, 35, 35))
+                    .addComponent(btnEliminar)
+                    .addComponent(btnModificar))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
 
         pack();
@@ -145,6 +187,10 @@ public class VentanaInventario extends javax.swing.JFrame implements Observer {
     private void cmbTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTipoActionPerformed
 
     }//GEN-LAST:event_cmbTipoActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnModificarActionPerformed
 
     private final ControlFerreteria gestor;
 
@@ -156,6 +202,9 @@ public class VentanaInventario extends javax.swing.JFrame implements Observer {
     private javax.swing.JButton btnModificar;
     private javax.swing.JComboBox<String> cmbTipo;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblNombre;
+    private javax.swing.JLabel lblTipoBusqueda;
+    private javax.swing.JTextField txfNombreProducto;
     // End of variables declaration//GEN-END:variables
 
     @Override
