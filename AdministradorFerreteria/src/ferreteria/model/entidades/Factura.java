@@ -21,7 +21,7 @@ public class Factura implements Serializable {
         productos = new ArrayList();
     }
 
-    public Factura(int id, String Fecha, String Vendedor, double Total, double SubTotal, double Impuesto, double Descuento, List<Producto> productos) {
+    public Factura(int id, String Fecha, String Vendedor, double Total, double SubTotal, double Impuesto, double Descuento) {
         this.id = id;
         this.Fecha = Fecha;
         this.Vendedor = Vendedor;
@@ -29,7 +29,6 @@ public class Factura implements Serializable {
         this.SubTotal = SubTotal;
         this.Impuesto = Impuesto;
         this.Descuento = Descuento;
-        this.productos = productos;
     }
 
     public int getId() {

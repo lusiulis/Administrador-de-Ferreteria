@@ -1,5 +1,6 @@
 package ferreteria.model.DAO;
 
+import ferreteria.model.entidades.Factura;
 import ferreteria.model.entidades.TipoProducto;
 import java.io.IOException;
 import java.sql.Connection;
@@ -11,32 +12,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-public class TipoProductoDAO {
-    
+public class FacturaDAO {
     private Properties cfg;
     private String baseDatos;
     private String usuario;
     private String clave;
     
-    private static TipoProductoDAO instancia = null;
+    private static FacturaDAO instancia = null;
 
-    private static final String CMD_AGREGAR
-            = "INSERT INTO tipo (idTipo, tipo, Longitud, CapacidadTrabajo) "
-            + "VALUES (?, ?, ?, ?);";
-    
-     private static final String CMD_LISTAR
-            = "SELECT idTipo, tipo, Longitud, CapacidadTrabajo FROM tipo;";
-    
-     private static final String CMD_BORRAR
-            = "delete from tipo where idTipo=?";
-     public static TipoProductoDAO getInstancia(){
-        if (instancia == null) {
-            instancia = new TipoProductoDAO();
-        }
-        return instancia;
-    }
-     
-     private TipoProductoDAO() {
+    private FacturaDAO() {
         this.cfg = new Properties();
         try{
             this.cfg.load(getClass().getResourceAsStream("configuracion.properties"));
@@ -47,49 +31,62 @@ public class TipoProductoDAO {
             System.out.println("Excepción: "+ex.getMessage());
         }
     }
- 
+    
+    public FacturaDAO getInstancia(){
+        if(instancia == null){
+            instancia = new FacturaDAO();
+        }
+        return instancia;
+    }
+    
     private Connection getConexion() throws SQLException{
         return GestorBD.obtenerInstancia().obtenerConexion(baseDatos, usuario, clave);
     }
     
-     public boolean agregar(TipoProducto nuevo) throws SQLException {
+    public boolean agregar(Factura nuevo) throws SQLException {
         boolean exito = false;
 
         try (Connection cnx = getConexion();
             PreparedStatement stm = cnx.prepareStatement(CMD_AGREGAR)) {
             stm.clearParameters();
             stm.setInt(1, nuevo.getId());
-            stm.setString(2, nuevo.getTipo());
-            stm.setDouble(3, nuevo.getLongitud());
-            stm.setString(4, nuevo.getCapacidadTrabajo());
+            stm.setString(2, nuevo.getFecha());
+            stm.setString(3, nuevo.getVendedor());
+            stm.setDouble(4, nuevo.getTotal());
+            stm.setDouble(5, nuevo.getSubTotal());
+            stm.setDouble(6, nuevo.getImpuesto());
+            stm.setDouble(7, nuevo.getDescuento());
 
             exito = stm.executeUpdate() == 1;
         }
 
         return exito;
     }
-     
-     public List<TipoProducto> listar() throws SQLException {
-        List<TipoProducto> r = new ArrayList<>();
+    
+    public List<Factura> listar() throws SQLException {
+        List<Factura> r = new ArrayList<>();
 
         try (Connection cnx = getConexion();
                 Statement stm = cnx.createStatement();
                 ResultSet rs = stm.executeQuery(CMD_LISTAR)) {
 
             while (rs.next()) {
-                r.add(new TipoProducto(
-                        rs.getInt("idTipo"),
-                        rs.getString("tipo"),
-                        rs.getDouble("Longitud"),
-                        rs.getString("CapacidadTrabajo")
+                r.add(new Factura(
+                        rs.getInt("idFactura"),
+                        rs.getString("Fecha"),
+                        rs.getString("Vendedor"),
+                        rs.getDouble("Total"),
+                        rs.getDouble("SubTotal"),
+                        rs.getDouble("Impuesto"),
+                        rs.getDouble("Descuento")
                 ));
             }
         }
 
         return r;
     }
-     
-     public boolean Borrar(int i) throws SQLException{
+    
+    public boolean Borrar(int i) throws SQLException{
          boolean exito = false;
          
          try(Connection cnx = getConexion();
@@ -101,6 +98,14 @@ public class TipoProductoDAO {
  
          return exito;
      }
+    
+     private static final String CMD_AGREGAR
+            = "INSERT INTO factura (idFactura, Fecha, Vendedor, Total, SubTotal, Impuesto, Descuento) "
+            + "VALUES (?, ?, ?, ?, ?, ?, ?);";
      
-     
+     private static final String CMD_LISTAR
+            = "SELECT idFactura, Fecha, Vendedor, Total, SubTotal, Impuesto, Descuento FROM factura;";
+
+      private static final String CMD_BORRAR
+            = "delete from factura where idFactura=?";
 }

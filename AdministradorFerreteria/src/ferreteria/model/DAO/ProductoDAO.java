@@ -1,5 +1,6 @@
 package ferreteria.model.DAO;
 
+import ferreteria.model.entidades.Producto;
 import ferreteria.model.entidades.TipoProducto;
 import java.io.IOException;
 import java.sql.Connection;
@@ -11,32 +12,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-public class TipoProductoDAO {
-    
+public class ProductoDAO {
     private Properties cfg;
     private String baseDatos;
     private String usuario;
     private String clave;
     
-    private static TipoProductoDAO instancia = null;
+    private static ProductoDAO instancia = null;
+    
 
-    private static final String CMD_AGREGAR
-            = "INSERT INTO tipo (idTipo, tipo, Longitud, CapacidadTrabajo) "
-            + "VALUES (?, ?, ?, ?);";
-    
-     private static final String CMD_LISTAR
-            = "SELECT idTipo, tipo, Longitud, CapacidadTrabajo FROM tipo;";
-    
-     private static final String CMD_BORRAR
-            = "delete from tipo where idTipo=?";
-     public static TipoProductoDAO getInstancia(){
-        if (instancia == null) {
-            instancia = new TipoProductoDAO();
-        }
-        return instancia;
-    }
-     
-     private TipoProductoDAO() {
+    private ProductoDAO() {
         this.cfg = new Properties();
         try{
             this.cfg.load(getClass().getResourceAsStream("configuracion.properties"));
@@ -47,49 +32,63 @@ public class TipoProductoDAO {
             System.out.println("Excepción: "+ex.getMessage());
         }
     }
- 
+    
+    public ProductoDAO getInstancia(){
+        if(instancia == null){
+            instancia = new ProductoDAO();
+        }
+        return instancia;
+    }
+    
     private Connection getConexion() throws SQLException{
         return GestorBD.obtenerInstancia().obtenerConexion(baseDatos, usuario, clave);
     }
     
-     public boolean agregar(TipoProducto nuevo) throws SQLException {
+    public boolean agregar(Producto nuevo) throws SQLException {
         boolean exito = false;
 
         try (Connection cnx = getConexion();
             PreparedStatement stm = cnx.prepareStatement(CMD_AGREGAR)) {
             stm.clearParameters();
             stm.setInt(1, nuevo.getId());
-            stm.setString(2, nuevo.getTipo());
-            stm.setDouble(3, nuevo.getLongitud());
-            stm.setString(4, nuevo.getCapacidadTrabajo());
+            stm.setString(2, nuevo.getNombre());
+            stm.setDouble(3, nuevo.getPrecio());
+            stm.setInt(4, nuevo.getCantidad());
+            stm.setString(5, nuevo.getDescripcion());
+            stm.setString(6, nuevo.getProvedor());
+            stm.setInt(7, nuevo.getIdTipo());
+            stm.setInt(8, nuevo.getIdFactura());
 
             exito = stm.executeUpdate() == 1;
         }
 
         return exito;
     }
-     
-     public List<TipoProducto> listar() throws SQLException {
-        List<TipoProducto> r = new ArrayList<>();
+    
+    public List<Producto> listar() throws SQLException {
+        List<Producto> r = new ArrayList<>();
 
         try (Connection cnx = getConexion();
                 Statement stm = cnx.createStatement();
                 ResultSet rs = stm.executeQuery(CMD_LISTAR)) {
 
             while (rs.next()) {
-                r.add(new TipoProducto(
+                r.add(new Producto(
+                        rs.getInt("idProducto"),
+                        rs.getString("Nombre"),
+                        rs.getDouble("Precio"),
+                        rs.getInt("Cantidad"),
+                        rs.getString("Descripcion"),
+                        rs.getString("Provedor"),
                         rs.getInt("idTipo"),
-                        rs.getString("tipo"),
-                        rs.getDouble("Longitud"),
-                        rs.getString("CapacidadTrabajo")
+                        rs.getInt("idFactura")
                 ));
             }
         }
-
         return r;
     }
-     
-     public boolean Borrar(int i) throws SQLException{
+    
+    public boolean Borrar(int i) throws SQLException{
          boolean exito = false;
          
          try(Connection cnx = getConexion();
@@ -101,6 +100,14 @@ public class TipoProductoDAO {
  
          return exito;
      }
-     
-     
+    
+    private static final String CMD_AGREGAR
+            = "INSERT INTO producto (idProducto, Nombre, Precio, Cantidad, Descripcion, Provedor, idTipo, idFactura) "
+            + "VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+    
+    private static final String CMD_LISTAR
+            = "SELECT idProducto, Nombre, Precio, Cantidad, Descripcion, Provedor, idTipo, idFactura FROM producto;";
+
+    private static final String CMD_BORRAR
+            = "delete from producto where idProducto=?";
 }
