@@ -5,10 +5,11 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Observable;
 import java.util.Observer;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class VentanaInventario extends javax.swing.JFrame implements Observer {
-   
+
     private DefaultTableModel modeloTabla;
 
     public VentanaInventario(ControlFerreteria gestor) {
@@ -49,8 +50,8 @@ public class VentanaInventario extends javax.swing.JFrame implements Observer {
                     "Anchura",
                     "Capacidad de trabajo"
                 };
-        
-        modeloTabla = new DefaultTableModel(nombreColumnas,0);
+
+        modeloTabla = new DefaultTableModel(nombreColumnas, 0);
         Tabla.setModel(modeloTabla);
     }
 
@@ -119,10 +120,25 @@ public class VentanaInventario extends javax.swing.JFrame implements Observer {
         });
 
         btnAgregar.setText("Agregar");
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
 
         btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         cmbTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cmbTipo.addActionListener(new java.awt.event.ActionListener() {
@@ -189,8 +205,33 @@ public class VentanaInventario extends javax.swing.JFrame implements Observer {
     }//GEN-LAST:event_cmbTipoActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        // TODO add your handling code here:
+        if (Tabla.getSelectedRow() != -1) {
+            new VentanaCrearOModificar(gestor, gestor.getProducto((Integer) Tabla.getValueAt(Tabla.getSelectedRow(), 0))).init();
+        }
     }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        String nombreProducto = "";
+        try {
+            nombreProducto = txfNombreProducto.getText().trim();
+        } catch (Exception e) {
+        }
+        gestor.buscarArticulos(nombreProducto, (String) cmbTipo.getSelectedItem());
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        new VentanaCrearOModificar(gestor).init();
+    }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        if (Tabla.getSelectedRow() != -1) {
+            if (JOptionPane.showConfirmDialog(null, "¿Desea borrar el producto \" " + modeloTabla.getValueAt(Tabla.getSelectedRow(), 1) + " \" del inventario?", "Confirmación",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.WARNING_MESSAGE) == JOptionPane.YES_OPTION) {
+                gestor.eliminarDeInventario((Integer) Tabla.getValueAt(Tabla.getSelectedRow(), 0));
+            }
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
     private final ControlFerreteria gestor;
 

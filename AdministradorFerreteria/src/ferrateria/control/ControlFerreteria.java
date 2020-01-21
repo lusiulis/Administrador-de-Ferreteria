@@ -6,6 +6,7 @@
 package ferrateria.control;
 
 import ferreteria.model.ModeloFerreteria;
+import ferreteria.model.entidades.Producto;
 import java.util.Observer;
 
 /**
@@ -36,7 +37,7 @@ public class ControlFerreteria {
         }
     }
     
-    public void agregarProducto(Integer codigo, Integer cantidad){
+    public void agregarProductoAFactura(Integer codigo, Integer cantidad){
         modelo.agregarProducto(codigo,cantidad);
     }
     
@@ -53,7 +54,24 @@ public class ControlFerreteria {
     }
     
     
-     public void eliminarArticulo(Integer numeroArt){
+     public void eliminarArticuloDeFactura(Integer numeroArt){
         modelo.eliminarArticulo(numeroArt);
+    }
+
+    public void buscarArticulos(String nombreProducto, String tipoProducto) {
+    }
+
+    public void eliminarDeInventario(Integer codigoArticulo) {
+    }
+    
+    public void agregarAInventario(Producto productoNuevo){
+        
+    }
+    public void modificarEnInventario(Producto productoAModificar){
+        
+    }
+
+    public Producto getProducto(Integer codigoProducto) {
+        return new Producto();
     }
 }

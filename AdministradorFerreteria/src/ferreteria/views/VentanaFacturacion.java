@@ -338,11 +338,10 @@ public class VentanaFacturacion extends javax.swing.JFrame implements Observer {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 904, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(lblMensaje)))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 904, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lblMensaje))
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 801, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
@@ -384,7 +383,7 @@ public class VentanaFacturacion extends javax.swing.JFrame implements Observer {
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         if (tablaArticulos.getSelectedRow() != -1) {
             //gestor.eliminarArticulo((String) tablaArticulos.getValueAt(tablaArticulos.getSelectedRow(), 0));
-            gestor.eliminarArticulo(tablaArticulos.getSelectedRow());
+            gestor.eliminarArticuloDeFactura(tablaArticulos.getSelectedRow());
         }
 
     }//GEN-LAST:event_btnEliminarActionPerformed
@@ -395,7 +394,7 @@ public class VentanaFacturacion extends javax.swing.JFrame implements Observer {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         if (camposValidos()) {
-            gestor.agregarProducto(Integer.valueOf(txfCodigoArticulo.getText()), Integer.valueOf((Integer) txfCantidad.getValue()));
+            gestor.agregarProductoAFactura(Integer.valueOf(txfCodigoArticulo.getText()), Integer.valueOf((Integer) txfCantidad.getValue()));
         } else {
             JOptionPane.showMessageDialog(null, "Existe un error con el campo de codigo o el campo de cantidad.");
         }

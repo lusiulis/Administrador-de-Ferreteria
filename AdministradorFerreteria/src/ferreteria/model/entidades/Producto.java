@@ -26,7 +26,17 @@ public class Producto implements Serializable {
         this.idTipo = idTipo;
         this.idFactura = idFactura;
     }
-
+    
+    public Producto(Producto pro){
+        this.id = pro.getId();
+        this.Nombre = pro.getNombre();
+        this.Precio = pro.getPrecio();
+        this.Cantidad = pro.getCantidad();
+        this.Descripcion = pro.getDescripcion();
+        this.Provedor = pro.getProvedor();
+        this.idTipo = pro.getId();
+        this.idFactura = pro.getIdFactura();
+    }
     public int getId() {
         return id;
     }
