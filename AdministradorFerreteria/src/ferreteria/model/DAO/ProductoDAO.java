@@ -25,18 +25,18 @@ public class ProductoDAO {
         return instancia;
     }
 
-    public boolean AgregarMaterial(Producto Nuevo) {
+    public boolean AgregarMaterial(Producto nuevo) {
         boolean Exito = false;
         try (Connection cnx = gestor.obtenerConexion();
                 PreparedStatement stm = cnx.prepareStatement(CMD_AGREGARMATERIAL);) {
 
             stm.clearParameters();
-            stm.setString(1, Nuevo.getNombre());
-            stm.setInt(2, Nuevo.getCantidad());
-            stm.setString(3, Nuevo.getDescripcion());
-            stm.setDouble(4, Nuevo.getPrecio());
-            stm.setString(5, Nuevo.getTipo());
-            stm.setDouble(6, Nuevo.getLongitud());
+            stm.setString(1, nuevo.getNombre());
+            stm.setInt(2, nuevo.getCantidad());
+            stm.setString(3, nuevo.getDescripcion());
+            stm.setDouble(4, nuevo.getPrecio());
+            stm.setString(5, nuevo.getTipo());
+            stm.setDouble(6, nuevo.getLongitud());
 
             Exito = stm.executeUpdate() == 1;
         } catch (SQLException ex) {
@@ -45,18 +45,18 @@ public class ProductoDAO {
         return Exito;
     }
 
-    public boolean AgregarHerramienta(Producto Nuevo) {
+    public boolean AgregarHerramienta(Producto nuevo) {
         boolean Exito = false;
         try (Connection cnx = gestor.obtenerConexion();
                 PreparedStatement stm = cnx.prepareStatement(CMD_AGREGARHERRAMIENTA);) {
 
             stm.clearParameters();
-            stm.setString(1, Nuevo.getNombre());
-            stm.setInt(2, Nuevo.getCantidad());
-            stm.setString(3, Nuevo.getDescripcion());
-            stm.setDouble(4, Nuevo.getPrecio());
-            stm.setString(5, Nuevo.getTipo());
-            stm.setString(6, Nuevo.getCapacidadTrabajo());
+            stm.setString(1, nuevo.getNombre());
+            stm.setInt(2, nuevo.getCantidad());
+            stm.setString(3, nuevo.getDescripcion());
+            stm.setDouble(4, nuevo.getPrecio());
+            stm.setString(5, nuevo.getTipo());
+            stm.setString(6, nuevo.getCapacidadTrabajo());
 
             Exito = stm.executeUpdate() == 1;
         } catch (SQLException ex) {
@@ -65,6 +65,12 @@ public class ProductoDAO {
         return Exito;
     }
 
+    public boolean Modificar(Producto nuevo){
+        boolean Exito = false;
+        
+        return Exito;
+    }
+    
     public boolean Borrar(int i) {
         boolean Exito = false;
 
@@ -141,6 +147,33 @@ public class ProductoDAO {
 
         return lista;
     }
+    
+    public Producto Recuperar(int id) {
+        Producto producto = null;
+
+        try (Connection cnx = gestor.obtenerConexion();
+             PreparedStatement stm = cnx.prepareStatement(CMD_BUSCARID);) {
+
+            stm.clearParameters();
+            stm.setInt(1, id);
+
+            ResultSet rs = stm.executeQuery();
+            producto = new Producto(
+            rs.getInt("idProducto"),
+                        rs.getString("Nombre"),
+                        rs.getInt("Cantidad"),
+                        rs.getString("Descripcion"),
+                        rs.getDouble("Precio"),
+                        rs.getString("Tipo"),
+                        rs.getDouble("Longitud"),
+                        rs.getString("CapacidadTrabajo"));
+
+        } catch (SQLException ex) {
+            System.err.printf("Excepción: '%s'%n", ex.getMessage());
+        }
+
+        return producto;
+    }
 
     private static final String CMD_AGREGARMATERIAL
             = "INSERT INTO producto (Nombre, Cantidad, Descripcion, Precio, Tipo, Longitud) "
@@ -157,4 +190,9 @@ public class ProductoDAO {
 
     private static final String CMD_LISTARTIPO
             = "SELECT idProducto, Nombre, Precio, Cantidad, Descripcion, Precio, Tipo, Longitud, CapacidadTrabajo FROM producto where Tipo like ?;";
+    
+    private static final String CMD_MODIFICAR
+            = "";
+    private static final String CMD_BUSCARID
+            = "SELECT idProducto, Nombre, Precio, Cantidad, Descripcion, Precio, Tipo, Longitud, CapacidadTrabajo FROM producto where idProducto = ?;";
 }

@@ -1,6 +1,8 @@
 package administradorferreteria;
 
 import ferrateria.control.ControlFerreteria;
+import ferreteria.model.DAO.ProductoDAO;
+import ferreteria.model.entidades.Producto;
 
 import ferreteria.views.VentanaFacturacion;
 import java.sql.SQLException;
@@ -12,6 +14,10 @@ import javax.swing.UnsupportedLookAndFeelException;
 public class AdministradorFerreteria {
 
     public static void main(String[] args) throws SQLException{ 
+        
+        ProductoDAO dao = ProductoDAO.getInstancia();
+        Producto nuevo = new Producto(1,"Clavos",5,"Kilo de clavos",1000.0,"Material",10.0,null);
+        dao.AgregarMaterial(nuevo);
        try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             JFrame.setDefaultLookAndFeelDecorated(true);
