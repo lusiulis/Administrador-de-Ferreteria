@@ -6,11 +6,13 @@
 package ferreteria.views;
 
 import ferrateria.control.ControlFerreteria;
+import ferreteria.model.DAO.ProductoDAO;
 import ferreteria.model.entidades.Producto;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Observable;
 import java.util.Observer;
+import javax.swing.JOptionPane;
 import static javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE;
 
 /**
@@ -22,6 +24,7 @@ public class VentanaCrearOModificar extends javax.swing.JFrame implements Observ
     private ControlFerreteria gestor;
     private Producto productoSinModificar;
     private Producto productoNuevo;
+    private Boolean estaModificando;
 
     /**
      * Creates new form VentanaCrearOModificar
@@ -36,13 +39,12 @@ public class VentanaCrearOModificar extends javax.swing.JFrame implements Observ
         productoNuevo = new Producto();
         lblID.setVisible(false);
         txfID.setVisible(false);
+        estaModificando = false;
     }
 
     public VentanaCrearOModificar(ControlFerreteria gestor, Producto productoAModificar) {
         initComponents();
         this.gestor = gestor;
-//        this.productoSinModificar = new Producto(productoAModificar);
-//        this.productoNuevo = new Producto(productoSinModificar);
         if (1 > 0) {//este if debe ser con el tipo de herramienta que es el producto
             btnMaterial.setSelected(true);
             btnHerramienta.setVisible(false);
@@ -53,7 +55,7 @@ public class VentanaCrearOModificar extends javax.swing.JFrame implements Observ
         this.txfID.setText(String.valueOf(productoSinModificar.getId()));
         this.txfPrecio.setText(String.valueOf(productoSinModificar.getPrecio()));
         this.txfCantidad.setText(String.valueOf(productoSinModificar.getCantidad()));
-//        this.txfProvedor.setText(productoSinModificar.getProvedor());
+        estaModificando = true;
     }
 
     /**
@@ -293,7 +295,7 @@ public class VentanaCrearOModificar extends javax.swing.JFrame implements Observ
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        
+        intentarGuardar();
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void setTipoProducto() {
@@ -380,7 +382,63 @@ public class VentanaCrearOModificar extends javax.swing.JFrame implements Observ
     public void update(Observable o, Object arg) {
     }
 
+    private void intentarGuardar() {
+        if (todoValido()) {
+            try {
+                productoNuevo.setCantidad(Integer.valueOf(txfCantidad.getText().trim()));
+                productoNuevo.setDescripcion(txfDescripcion.getText());
+                productoNuevo.setNombre(txfNombre.getText().trim());
+                productoNuevo.setPrecio(Double.valueOf(txfPrecio.getText().trim()));
+                if (btnHerramienta.isSelected()) {
+                    productoNuevo.setTipo("herramienta");
+                    productoNuevo.setCapacidadTrabajo((String) cmbCapacidadTrabajo.getSelectedItem());
+                    productoNuevo.setLongitud(null);
+                } else {
+                    //es material
+                    productoNuevo.setTipo("material");
+                    productoNuevo.setLongitud(Double.valueOf(txfLongitud.getText().trim()));
+                    productoNuevo.setCapacidadTrabajo(null);
+                }
+                
+                //todo se setio bien, intentar guardarNuevo o modificar
+                if(estaModificando){
+                    
+                }else{
+                    gestor.agregarAInventario(productoNuevo);
+                    cerrarVentana();
+                }
+                
+            } catch (Exception e) {
+                //algo paso, lo mas seguro es que no el usuario no digito descripcion, ya que todoValido() no revisa ese campo
+            }
+            
+        } else {
+            JOptionPane.showMessageDialog(this, "Existen campos con errores.");
+        }
+    }
 
+    private Boolean todoValido() {
+        Boolean todoValido = true;
+        try {
+            if (Integer.valueOf(txfCantidad.getText()) < 0) {
+                todoValido = false;
+            }
+            if (txfNombre.getText().trim().isEmpty()) {
+                todoValido = false;
+            }
+            if (Integer.valueOf(txfPrecio.getText()) < 0) {
+                todoValido = false;
+            }
+            if (btnMaterial.isSelected()) {
+                if (Integer.valueOf(txfLongitud.getText()) < 0) {
+                    todoValido = false;
+                }
+            }
+        } catch (Exception e) {
+            todoValido = false;
+        }
+        return todoValido;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnCancelar;

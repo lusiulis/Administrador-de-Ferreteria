@@ -5,6 +5,7 @@
  */
 package ferrateria.control;
 
+import ferreteria.model.DAO.ProductoDAO;
 import ferreteria.model.ModeloFerreteria;
 import ferreteria.model.entidades.Producto;
 import java.util.Observer;
@@ -65,6 +66,7 @@ public class ControlFerreteria {
     }
     
     public void agregarAInventario(Producto productoNuevo){
+        ProductoDAO.getInstancia().AgregarProducto(productoNuevo);
         
     }
     public void modificarEnInventario(Producto productoAModificar){

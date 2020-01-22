@@ -5,6 +5,7 @@
  */
 package ferreteria.model;
 
+import ferreteria.model.DAO.ProductoDAO;
 import ferreteria.model.entidades.Factura;
 import ferreteria.model.entidades.Producto;
 import java.util.Observable;
@@ -65,4 +66,6 @@ public class ModeloFerreteria extends Observable {
         setChanged();
         notifyObservers(facturaActual);
     }
+
+  
 }

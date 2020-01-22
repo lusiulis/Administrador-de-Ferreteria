@@ -17,15 +17,24 @@ public class ProductoDAO {
     private ProductoDAO() {
         this.gestor = GestorBD.obtenerInstancia();
     }
-
-    public static ProductoDAO getInstancia() {
-        if (instancia == null) {
+    
+    public static ProductoDAO getInstancia(){
+        if(instancia == null){
             instancia = new ProductoDAO();
         }
         return instancia;
     }
-
-    public boolean AgregarMaterial(Producto Nuevo) {
+    
+    public Integer AgregarProducto(Producto nuevo){
+        if(nuevo.getTipo().equals("material")){
+            AgregarMaterial(nuevo);
+        }else{
+            AgregarHerramienta(nuevo);
+        }
+        return 0;
+    }
+    
+    public boolean AgregarMaterial(Producto Nuevo){
         boolean Exito = false;
         try (Connection cnx = gestor.obtenerConexion();
                 PreparedStatement stm = cnx.prepareStatement(CMD_AGREGARMATERIAL);) {
