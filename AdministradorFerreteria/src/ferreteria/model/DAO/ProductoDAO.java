@@ -56,7 +56,27 @@ public class ProductoDAO {
             stm.setString(5, nuevo.getDescripcion());
             stm.setString(6, nuevo.getProvedor());
             stm.setInt(7, nuevo.getIdTipo());
-            stm.setInt(8, nuevo.getIdFactura());
+            stm.setInt(8,nuevo.getIdFactura());
+
+            exito = stm.executeUpdate() == 1;
+        }
+
+        return exito;
+    }
+    
+    public boolean agregarSinFactura(Producto nuevo) throws SQLException {
+        boolean exito = false;
+
+        try (Connection cnx = getConexion();
+            PreparedStatement stm = cnx.prepareStatement(CMD_AGREGAR_SIN_FACTURA)) {
+            stm.clearParameters();
+            stm.setInt(1, nuevo.getId());
+            stm.setString(2, nuevo.getNombre());
+            stm.setDouble(3, nuevo.getPrecio());
+            stm.setInt(4, nuevo.getCantidad());
+            stm.setString(5, nuevo.getDescripcion());
+            stm.setString(6, nuevo.getProvedor());
+            stm.setInt(7, nuevo.getIdTipo());
 
             exito = stm.executeUpdate() == 1;
         }
@@ -175,6 +195,10 @@ public class ProductoDAO {
     private static final String CMD_AGREGAR
             = "INSERT INTO producto (idProducto, Nombre, Precio, Cantidad, Descripcion, Provedor, idTipo, idFactura) "
             + "VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+    
+    private static final String CMD_AGREGAR_SIN_FACTURA
+            = "INSERT INTO producto (idProducto, Nombre, Precio, Cantidad, Descripcion, Provedor, idTipo) "
+            + "VALUES (?, ?, ?, ?, ?, ?, ?);";
     
     private static final String CMD_LISTAR
             = "SELECT idProducto, Nombre, Precio, Cantidad, Descripcion, Provedor, idTipo, idFactura FROM producto;";
