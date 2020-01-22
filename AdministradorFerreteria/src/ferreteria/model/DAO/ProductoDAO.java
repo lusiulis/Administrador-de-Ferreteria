@@ -57,7 +57,7 @@ public class ProductoDAO {
     public boolean AgregarHerramienta(Producto nuevo) {
         boolean Exito = false;
         try (Connection cnx = gestor.obtenerConexion();
-             PreparedStatement stm = cnx.prepareStatement(CMD_AGREGARHERRAMIENTA);) {
+                PreparedStatement stm = cnx.prepareStatement(CMD_AGREGARHERRAMIENTA);) {
 
             stm.clearParameters();
             stm.setString(1, nuevo.getNombre());
@@ -74,13 +74,11 @@ public class ProductoDAO {
         return Exito;
     }
 
-
-    public boolean Modificar(Producto nuevo){
+    public boolean Modificar(Producto nuevo) {
         boolean Exito = false;
-        
-        return Exito;
-    }  
 
+        return Exito;
+    }
 
     public boolean Borrar(int i) {
         boolean Exito = false;
@@ -158,21 +156,17 @@ public class ProductoDAO {
 
         return lista;
     }
-    
+
     public Producto recuperarProducto(int id) {
         Producto producto = null;
-    
-    public List<Producto> listarTipoYNombre(String nombre, String tipo){
-        List<Producto> lista = new ArrayList();
-
         try (Connection cnx = gestor.obtenerConexion();
-             PreparedStatement stm = cnx.prepareStatement(CMD_BUSCARID);) {
+                PreparedStatement stm = cnx.prepareStatement(CMD_BUSCARID);) {
 
             stm.clearParameters();
             stm.setInt(1, id);
 
             ResultSet rs = stm.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 producto = new Producto(
                         rs.getInt("idProducto"),
                         rs.getString("Nombre"),
@@ -188,9 +182,11 @@ public class ProductoDAO {
         } catch (SQLException ex) {
             System.err.printf("Excepción: '%s'%n", ex.getMessage());
         }
-
         return producto;
     }
+
+    public List<Producto> listarTipoYNombre(String nombre, String tipo) {
+        List<Producto> lista = new ArrayList();
 
         try (Connection cnx = gestor.obtenerConexion();
                 PreparedStatement stm = cnx.prepareStatement(CMD_LISTARAMBOS);) {
@@ -236,14 +232,11 @@ public class ProductoDAO {
     private static final String CMD_LISTARTIPO
             = "SELECT idProducto, Nombre, Precio, Cantidad, Descripcion, Precio, Tipo, Longitud, CapacidadTrabajo FROM producto where Tipo like ?;";
 
-    
     private static final String CMD_MODIFICAR
             = "";
     private static final String CMD_BUSCARID
             = "SELECT idProducto, Nombre, Precio, Cantidad, Descripcion, Precio, Tipo, Longitud, CapacidadTrabajo FROM producto where idProducto = ?;";
 
-
-    
-     private static final String CMD_LISTARAMBOS
+    private static final String CMD_LISTARAMBOS
             = "SELECT idProducto, Nombre, Precio, Cantidad, Descripcion, Precio, Tipo, Longitud, CapacidadTrabajo FROM producto where Tipo like ? AND Nombre like ?;";
 }
