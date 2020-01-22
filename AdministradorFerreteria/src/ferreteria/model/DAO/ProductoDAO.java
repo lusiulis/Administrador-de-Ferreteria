@@ -8,8 +8,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class ProductoDAO {
     
@@ -114,6 +112,37 @@ public class ProductoDAO {
              
         return lista;
     }
+    
+    public List<Producto> ListarTipo(String tipo){
+        List<Producto> lista = new ArrayList();
+        
+        try(Connection cnx = gestor.obtenerConexion();
+            PreparedStatement stm = cnx.prepareStatement(CMD_LISTARTIPO);){
+            
+            stm.clearParameters();
+            stm.setString(1,tipo);
+            
+            ResultSet rs = stm.executeQuery();
+            while(rs.next()){
+                lista.add(new Producto(
+                        rs.getInt("idProducto"),
+                        rs.getString("Nombre"),
+                        rs.getInt("Cantidad"),
+                        rs.getString("Descripcion"),
+                        rs.getDouble("Precio"),
+                        rs.getString("Tipo"),
+                        rs.getDouble("Longitud"),
+                        rs.getString("CapacidadTrabajo")
+                ));
+            }
+            
+        } catch (SQLException ex) {
+            System.err.printf("Excepción: '%s'%n", ex.getMessage());
+        }
+             
+        return lista;
+    }
+    
     private static final String CMD_AGREGARMATERIAL
             = "INSERT INTO producto (Nombre, Cantidad, Descripcion, Precio, Tipo, Longitud) "
             + "VALUES (?, ?, ?, ?, ?, ?);";
@@ -126,4 +155,7 @@ public class ProductoDAO {
     
      private static final String CMD_LISTARNOMBRE
             = "SELECT idProducto, Nombre, Precio, Cantidad, Descripcion, Precio, Tipo, Longitud, CapacidadTrabajo FROM producto where Nombre like ?;";
+     
+     private static final String CMD_LISTARTIPO
+            = "SELECT idProducto, Nombre, Precio, Cantidad, Descripcion, Precio, Tipo, Longitud, CapacidadTrabajo FROM producto where Tipo like ?;";
 }
