@@ -75,8 +75,6 @@ public class ProductoDAO {
             stm.setDouble(3, nuevo.getPrecio());
             stm.setInt(4, nuevo.getCantidad());
             stm.setString(5, nuevo.getDescripcion());
-            stm.setString(6, nuevo.getProvedor());
-            stm.setInt(7, nuevo.getIdTipo());
 
             exito = stm.executeUpdate() == 1;
         }

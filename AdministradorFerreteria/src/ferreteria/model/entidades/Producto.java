@@ -3,45 +3,31 @@ package ferreteria.model.entidades;
 import java.io.Serializable;
 
 public class Producto implements Serializable {
-    
+
     private int id;
-    private String Nombre;
-    private double Precio;
-    private int Cantidad;
-    private String Descripcion;
-    private String Provedor;
-    private int idTipo;
-    private int idFactura;
+    private String nombre;
+    private Integer cantidad;//cantidad en inventario 
+    private String descripcion;
+    private Double precio; //precio por unidad
+    private String tipo;//herramienta o material
+    private Double Longitud;
+    private String capacidadTrabajo;
 
-    private TipoProducto tipo;
-    private Factura factura;
-    
     public Producto() {
-        tipo = new TipoProducto();
-        factura = new Factura();
     }
 
-    public Producto(int id, String Nombre, double Precio, int Cantidad, String Descripcion, String Provedor, int idTipo, int idFactura) {
+    public Producto(int id, String nombre, Integer cantidad, String descripcion, Double precio, String tipo, Double Longitud, String capacidadTrabajo) {
         this.id = id;
-        this.Nombre = Nombre;
-        this.Precio = Precio;
-        this.Cantidad = Cantidad;
-        this.Descripcion = Descripcion;
-        this.Provedor = Provedor;
-        this.idTipo = idTipo;
-        this.idFactura = idFactura;
+        this.nombre = nombre;
+        this.cantidad = cantidad;
+        this.descripcion = descripcion;
+        this.precio = precio;
+        this.tipo = tipo;
+        this.Longitud = Longitud;
+        this.capacidadTrabajo = capacidadTrabajo;
     }
+
     
-    public Producto(Producto pro){
-        this.id = pro.getId();
-        this.Nombre = pro.getNombre();
-        this.Precio = pro.getPrecio();
-        this.Cantidad = pro.getCantidad();
-        this.Descripcion = pro.getDescripcion();
-        this.Provedor = pro.getProvedor();
-        this.idTipo = pro.getId();
-        this.idFactura = pro.getIdFactura();
-    }
     public int getId() {
         return id;
     }
@@ -51,65 +37,66 @@ public class Producto implements Serializable {
     }
 
     public String getNombre() {
-        return Nombre;
+        return nombre;
     }
 
-    public void setNombre(String Nombre) {
-        this.Nombre = Nombre;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public double getPrecio() {
-        return Precio;
+    public Integer getCantidad() {
+        return cantidad;
     }
 
-    public void setPrecio(double Precio) {
-        this.Precio = Precio;
-    }
-
-    public int getCantidad() {
-        return Cantidad;
-    }
-
-    public void setCantidad(int Cantidad) {
-        this.Cantidad = Cantidad;
+    public void setCantidad(Integer cantidad) {
+        this.cantidad = cantidad;
     }
 
     public String getDescripcion() {
-        return Descripcion;
+        return descripcion;
     }
 
-    public void setDescripcion(String Descripcion) {
-        this.Descripcion = Descripcion;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
-    public String getProvedor() {
-        return Provedor;
+    public Double getPrecio() {
+        return precio;
     }
 
-    public void setProvedor(String Provedor) {
-        this.Provedor = Provedor;
+    public void setPrecio(Double precio) {
+        this.precio = precio;
     }
 
-    public int getIdTipo() {
-        return idTipo;
+    public String getTipo() {
+        return tipo;
     }
 
-    public void setIdTipo(int idTipo) {
-        this.idTipo = idTipo;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
-    public int getIdFactura() {
-        return idFactura;
+    public Double getLongitud() {
+        return Longitud;
     }
 
-    public void setIdFactura(int idFactura) {
-        this.idFactura = idFactura;
+    public void setLongitud(Double Longitud) {
+        this.Longitud = Longitud;
     }
+
+    public String getCapacidadTrabajo() {
+        return capacidadTrabajo;
+    }
+
+    public void setCapacidadTrabajo(String capacidadTrabajo) {
+        this.capacidadTrabajo = capacidadTrabajo;
+    }
+
+    
 
     @Override
     public String toString() {
-        return "Producto{" + "id=" + id + ", Nombre=" + Nombre + ", Precio=" + Precio + ", Cantidad=" + Cantidad + ", Descripcion=" + Descripcion + ", Provedor=" + Provedor + ", idTipo=" + idTipo + ", idFactura=" + idFactura + '}';
+        return "Producto{" + "id=" + id + ", Nombre=" + nombre + ", Precio=" + precio + ", Cantidad=" + cantidad + ", Descripcion=" + descripcion + "'}'";
     }
-    
-    
+
 }

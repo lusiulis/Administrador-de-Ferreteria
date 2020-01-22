@@ -499,12 +499,12 @@ public class VentanaFacturacion extends javax.swing.JFrame implements Observer {
 
     private void actualizoFactura(Factura facturaNueva) {
         //actualizar montos
-        lblSubtotal.setText("Subtotal: " + String.valueOf(facturaNueva.getSubTotal()));
-        lblTotal.setText("Total: " + String.valueOf(facturaNueva.getTotal()));
-        lblImpuesto.setText("Impuesto: " + String.valueOf(facturaNueva.getImpuesto()));
+//        lblSubtotal.setText("Subtotal: " + String.valueOf(facturaNueva.getSubTotal()));
+//        lblTotal.setText("Total: " + String.valueOf(facturaNueva.getTotal()));
+//        lblImpuesto.setText("Impuesto: " + String.valueOf(facturaNueva.getImpuesto()));
 
         //actualizar lista
-        actualizarListaProductos(facturaNueva.getProductos());
+        //actualizarListaProductos(facturaNueva.getProductos());
         
         //reset campos
         txfCantidad.setValue(1);
