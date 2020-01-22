@@ -1,211 +1,129 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package ferreteria.model.DAO;
 
-/**
- *
- * @author lusiu
- */
+import ferreteria.model.entidades.Producto;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class ProductoDAO {
-    private Properties cfg;
-    private String baseDatos;
-    private String usuario;
-    private String clave;
+    
+    private final GestorBD gestor;
     
     private static ProductoDAO instancia = null;
-    
 
     private ProductoDAO() {
-        this.cfg = new Properties();
-        try{
-            this.cfg.load(getClass().getResourceAsStream("configuracion.properties"));
-            this.baseDatos = cfg.getProperty("base_datos");
-            this.usuario = cfg.getProperty("usuario");
-            this.clave = cfg.getProperty("clave");
-        }catch(IOException ex){
-            System.out.println("Excepción: "+ex.getMessage());
-        }
+        this.gestor = GestorBD.obtenerInstancia();
     }
     
-    public static ProductoDAO getInstancia(){
+    public ProductoDAO getInstancia(){
         if(instancia == null){
             instancia = new ProductoDAO();
         }
         return instancia;
     }
     
-    private Connection getConexion() throws SQLException{
-        return GestorBD.obtenerInstancia().obtenerConexion(baseDatos, usuario, clave);
-    }
-    
-    public boolean agregar(Producto nuevo) throws SQLException {
-        boolean exito = false;
-
-        try (Connection cnx = getConexion();
-            PreparedStatement stm = cnx.prepareStatement(CMD_AGREGAR)) {
+    public boolean AgregarMaterial(Producto Nuevo){
+        boolean Exito = false;
+        try(Connection cnx = gestor.obtenerConexion();
+            PreparedStatement stm = cnx.prepareStatement(CMD_AGREGARMATERIAL);){
+           
             stm.clearParameters();
-            stm.setInt(1, nuevo.getId());
-            stm.setString(2, nuevo.getNombre());
-            stm.setDouble(3, nuevo.getPrecio());
-            stm.setInt(4, nuevo.getCantidad());
-            stm.setString(5, nuevo.getDescripcion());
-            stm.setString(6, nuevo.getProvedor());
-            stm.setInt(7, nuevo.getIdTipo());
-            stm.setInt(8,nuevo.getIdFactura());
-
-            exito = stm.executeUpdate() == 1;
+            stm.setString(1, Nuevo.getNombre());
+            stm.setInt(2, Nuevo.getCantidad());
+            stm.setString(3, Nuevo.getDescripcion());
+            stm.setDouble(4, Nuevo.getPrecio());
+            stm.setString(5, Nuevo.getTipo());
+            stm.setDouble(6, Nuevo.getLongitud());
+            
+            Exito = stm.executeUpdate() == 1;
+        } catch (SQLException ex) {
+            System.err.printf("Excepción: '%s'%n", ex.getMessage());
         }
-
-        return exito;
+        return Exito;
     }
     
-    public boolean agregarSinFactura(Producto nuevo) throws SQLException {
-        boolean exito = false;
-
-        try (Connection cnx = getConexion();
-            PreparedStatement stm = cnx.prepareStatement(CMD_AGREGAR_SIN_FACTURA)) {
+    public boolean AgregarHerramienta(Producto Nuevo){
+        boolean Exito = false;
+        try(Connection cnx = gestor.obtenerConexion();
+            PreparedStatement stm = cnx.prepareStatement(CMD_AGREGARHERRAMIENTA);){
+            
             stm.clearParameters();
-            stm.setInt(1, nuevo.getId());
-            stm.setString(2, nuevo.getNombre());
-            stm.setDouble(3, nuevo.getPrecio());
-            stm.setInt(4, nuevo.getCantidad());
-            stm.setString(5, nuevo.getDescripcion());
-
-            exito = stm.executeUpdate() == 1;
-        }
-
-        return exito;
-    }
-    
-    public List<Producto> listar() throws SQLException {
-        List<Producto> r = new ArrayList<>();
-
-        try (Connection cnx = getConexion();
-                Statement stm = cnx.createStatement();
-                ResultSet rs = stm.executeQuery(CMD_LISTAR)) {
-
-            while (rs.next()) {
-                r.add(new Producto(
-                        rs.getInt("idProducto"),
-                        rs.getString("Nombre"),
-                        rs.getDouble("Precio"),
-                        rs.getInt("Cantidad"),
-                        rs.getString("Descripcion"),
-                        rs.getString("Provedor"),
-                        rs.getInt("idTipo"),
-                        rs.getInt("idFactura")
-                ));
-            }
-        }
-        return r;
-    }
-    
-    public List<Producto> listarIdTipo(int i) throws SQLException {
-        List<Producto> r = new ArrayList<>();
-
-        try (Connection cnx = getConexion();
-             PreparedStatement stm = cnx.prepareStatement(CMD_LISTAR_IDTIPO);) {
+            stm.setString(1, Nuevo.getNombre());
+            stm.setInt(2, Nuevo.getCantidad());
+            stm.setString(3, Nuevo.getDescripcion());
+            stm.setDouble(4, Nuevo.getPrecio());
+            stm.setString(5, Nuevo.getTipo());
+            stm.setString(6, Nuevo.getCapacidadTrabajo());
             
+            Exito = stm.executeUpdate() == 1;
+        } catch (SQLException ex) {
+            System.err.printf("Excepción: '%s'%n", ex.getMessage());
+        }
+        return Exito;
+    }
+    
+    public boolean Borrar(int i){
+        boolean Exito = false;
+        
+        try(Connection cnx = gestor.obtenerConexion();
+            PreparedStatement stm = cnx.prepareStatement(CMD_BORRAR);){
+            
+            stm.clearParameters();
             stm.setInt(1, i);
-            ResultSet rs = stm.executeQuery();
-            while (rs.next()) {
-                r.add(new Producto(
-                        rs.getInt("idProducto"),
-                        rs.getString("Nombre"),
-                        rs.getDouble("Precio"),
-                        rs.getInt("Cantidad"),
-                        rs.getString("Descripcion"),
-                        rs.getString("Provedor"),
-                        rs.getInt("idTipo"),
-                        rs.getInt("idFactura")
-                ));
-            }
-        }
-        return r;
-    }
-    
-    public List<Producto> listarIdFactura(int i) throws SQLException {
-        List<Producto> r = new ArrayList<>();
-
-        try (Connection cnx = getConexion();
-             PreparedStatement stm = cnx.prepareStatement(CMD_LISTAR_IDFACTURA);) {
             
-            stm.setInt(1, i);
-            ResultSet rs = stm.executeQuery();
-            while (rs.next()) {
-                r.add(new Producto(
-                        rs.getInt("idProducto"),
-                        rs.getString("Nombre"),
-                        rs.getDouble("Precio"),
-                        rs.getInt("Cantidad"),
-                        rs.getString("Descripcion"),
-                        rs.getString("Provedor"),
-                        rs.getInt("idTipo"),
-                        rs.getInt("idFactura")
-                ));
-            }
+            Exito = stm.executeUpdate() == 1;
+        } catch (SQLException ex) {
+            System.err.printf("Excepción: '%s'%n", ex.getMessage());
         }
-        return r;
+        
+        return Exito;
     }
     
-    public List<Producto> listarNombre(String i) throws SQLException {
-        List<Producto> r = new ArrayList<>();
-
-        try (Connection cnx = getConexion();
-             PreparedStatement stm = cnx.prepareStatement(CMD_LISTAR_NOMBRE);) {
+    public List<Producto> ListarNombre(String nombre){
+        List<Producto> lista = new ArrayList();
+        
+        try(Connection cnx = gestor.obtenerConexion();
+            PreparedStatement stm = cnx.prepareStatement(CMD_LISTARNOMBRE);){
             
-            stm.setString(1, "%"+i+"%");
+            stm.clearParameters();
+            stm.setString(1, "%"+nombre+"%");
+            
             ResultSet rs = stm.executeQuery();
-            while (rs.next()) {
-                r.add(new Producto(
+            while(rs.next()){
+                lista.add(new Producto(
                         rs.getInt("idProducto"),
                         rs.getString("Nombre"),
-                        rs.getDouble("Precio"),
                         rs.getInt("Cantidad"),
                         rs.getString("Descripcion"),
-                        rs.getString("Provedor"),
-                        rs.getInt("idTipo"),
-                        rs.getInt("idFactura")
+                        rs.getDouble("Precio"),
+                        rs.getString("Tipo"),
+                        rs.getDouble("Longitud"),
+                        rs.getString("CapacidadTrabajo")
                 ));
             }
+            
+        } catch (SQLException ex) {
+            System.err.printf("Excepción: '%s'%n", ex.getMessage());
         }
-        return r;
+             
+        return lista;
     }
+    private static final String CMD_AGREGARMATERIAL
+            = "INSERT INTO producto (Nombre, Cantidad, Descripcion, Precio, Tipo, Longitud) "
+            + "VALUES (?, ?, ?, ?, ?, ?);";
     
-    public boolean Borrar(int i) throws SQLException{
-         boolean exito = false;
-         
-         try(Connection cnx = getConexion();
-             PreparedStatement stm = cnx.prepareStatement(CMD_BORRAR);
-              ){           
-             stm.setInt(1, i);
-             exito = stm.executeUpdate() == 1;            
-         }
- 
-         return exito;
-     }
+    private static final String CMD_AGREGARHERRAMIENTA
+            = "INSERT INTO producto (Nombre, Cantidad, Descripcion, Precio, Tipo, CapacidadTrabajo) "
+            + "VALUES (?, ?, ?, ?, ?, ?);";
+    private static final String CMD_BORRAR
+            = "delete from producto where idProducto=?";
     
-    private static final String CMD_AGREGAR
-            = "INSERT INTO producto (idProducto, Nombre, Precio, Cantidad, Descripcion, Provedor, idTipo, idFactura) "
-            + "VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
-    
-    private static final String CMD_AGREGAR_SIN_FACTURA
-            = "INSERT INTO producto (idProducto, Nombre, Precio, Cantidad, Descripcion, Provedor, idTipo) "
-            + "VALUES (?, ?, ?, ?, ?, ?, ?);";
-    
-    private static final String CMD_LISTAR
-            = "SELECT idProducto, Nombre, Precio, Cantidad, Descripcion, Provedor, idTipo, idFactura FROM producto;";
-
-    private static final String CMD_LISTAR_IDTIPO
-            = "SELECT idProducto, Nombre, Precio, Cantidad, Descripcion, Provedor, idTipo, idFactura FROM producto where idTipo=?;";
-    
-    private static final String CMD_LISTAR_NOMBRE
-            = "SELECT idProducto, Nombre, Precio, Cantidad, Descripcion, Provedor, idTipo, idFactura FROM producto where Nombre like ?;";
-    
-    private static final String CMD_LISTAR_IDFACTURA
-            = "SELECT idProducto, Nombre, Precio, Cantidad, Descripcion, Provedor, idTipo, idFactura FROM producto where idFactura=?;";
-    
+     private static final String CMD_LISTARNOMBRE
+            = "SELECT idProducto, Nombre, Precio, Cantidad, Descripcion, Precio, Tipo, Longitud, CapacidadTrabajo FROM producto where Nombre like ?;";
 }

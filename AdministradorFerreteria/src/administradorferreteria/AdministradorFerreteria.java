@@ -2,8 +2,6 @@ package administradorferreteria;
 
 import ferrateria.control.ControlFerreteria;
 
-import ferreteria.model.DAO.asd;
-import ferreteria.model.entidades.Producto;
 import ferreteria.views.VentanaFacturacion;
 import java.sql.SQLException;
 import javax.swing.JFrame;
