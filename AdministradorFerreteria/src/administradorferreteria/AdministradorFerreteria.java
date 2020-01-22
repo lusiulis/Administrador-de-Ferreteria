@@ -1,8 +1,6 @@
 package administradorferreteria;
 
 import ferrateria.control.ControlFerreteria;
-import ferreteria.model.DAO.ProductoDAO;
-import ferreteria.model.entidades.Producto;
 import ferreteria.views.VentanaFacturacion;
 import java.sql.SQLException;
 import javax.swing.JFrame;
@@ -12,8 +10,8 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 public class AdministradorFerreteria {
 
-    public static void main(String[] args) throws SQLException{ 
-       try {
+    public static void main(String[] args) throws SQLException {
+        try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             JFrame.setDefaultLookAndFeelDecorated(true);
         } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException e) {
@@ -24,7 +22,7 @@ public class AdministradorFerreteria {
 
     private void iniciar() {
         SwingUtilities.invokeLater(() -> {
-            new VentanaFacturacion( new ControlFerreteria()).init();
+            new VentanaFacturacion(new ControlFerreteria()).init();
         });
     }
 }
