@@ -27,7 +27,7 @@ public class ProductoDAO {
     }
 
     public Boolean AgregarProducto(Producto nuevo) {
-        if (nuevo.getTipo().equals("material")) {
+        if (nuevo.getTipo().equals("Material")) {
             return AgregarMaterial(nuevo);
         } else {
             return AgregarHerramienta(nuevo);
@@ -58,7 +58,7 @@ public class ProductoDAO {
     public boolean AgregarHerramienta(Producto nuevo) {
         boolean Exito = false;
         try (Connection cnx = gestor.obtenerConexion();
-             PreparedStatement stm = cnx.prepareStatement(CMD_AGREGARHERRAMIENTA);) {
+                PreparedStatement stm = cnx.prepareStatement(CMD_AGREGARHERRAMIENTA);) {
 
             stm.clearParameters();
             stm.setString(1, nuevo.getNombre());
@@ -75,8 +75,7 @@ public class ProductoDAO {
         return Exito;
     }
 
-
-    public boolean Modificar(Producto nuevo){
+    public boolean Modificar(Producto nuevo) {
         boolean Exito = false;
         
         try(Connection cnx = gestor.obtenerConexion();){
@@ -98,6 +97,8 @@ public class ProductoDAO {
         return Exito;
     }  
 
+        return Exito;
+    }
 
     public boolean Borrar(int i) {
         boolean Exito = false;
@@ -175,18 +176,17 @@ public class ProductoDAO {
 
         return lista;
     }
-    
+
     public Producto recuperarProducto(int id) {
         Producto producto = null;
-
         try (Connection cnx = gestor.obtenerConexion();
-             PreparedStatement stm = cnx.prepareStatement(CMD_BUSCARID);) {
+                PreparedStatement stm = cnx.prepareStatement(CMD_BUSCARID);) {
 
             stm.clearParameters();
             stm.setInt(1, id);
 
             ResultSet rs = stm.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 producto = new Producto(
                         rs.getInt("idProducto"),
                         rs.getString("Nombre"),
@@ -202,8 +202,38 @@ public class ProductoDAO {
         } catch (SQLException ex) {
             System.err.printf("Excepción: '%s'%n", ex.getMessage());
         }
-
         return producto;
+    }
+
+    public List<Producto> listarTipoYNombre(String nombre, String tipo) {
+        List<Producto> lista = new ArrayList();
+
+        try (Connection cnx = gestor.obtenerConexion();
+                PreparedStatement stm = cnx.prepareStatement(CMD_LISTARAMBOS);) {
+
+            stm.clearParameters();
+            stm.setString(1, tipo);
+            stm.setString(2, nombre);
+
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                lista.add(new Producto(
+                        rs.getInt("idProducto"),
+                        rs.getString("Nombre"),
+                        rs.getInt("Cantidad"),
+                        rs.getString("Descripcion"),
+                        rs.getDouble("Precio"),
+                        rs.getString("Tipo"),
+                        rs.getDouble("Longitud"),
+                        rs.getString("CapacidadTrabajo")
+                ));
+            }
+
+        } catch (SQLException ex) {
+            System.err.printf("Excepción: '%s'%n", ex.getMessage());
+        }
+
+        return lista;
     }
 
     private static final String CMD_AGREGARMATERIAL
@@ -222,8 +252,11 @@ public class ProductoDAO {
     private static final String CMD_LISTARTIPO
             = "SELECT idProducto, Nombre, Precio, Cantidad, Descripcion, Tipo, Longitud, CapacidadTrabajo FROM producto where Tipo like ?;";
 
+    private static final String CMD_MODIFICAR
+            = "";
     private static final String CMD_BUSCARID
             = "SELECT idProducto, Nombre, Precio, Cantidad, Descripcion, Precio, Tipo, Longitud, CapacidadTrabajo FROM producto where idProducto = ?;";
 
-
+    private static final String CMD_LISTARAMBOS
+            = "SELECT idProducto, Nombre, Precio, Cantidad, Descripcion, Precio, Tipo, Longitud, CapacidadTrabajo FROM producto where Tipo like ? AND Nombre like ?;";
 }
