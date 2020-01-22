@@ -171,13 +171,8 @@
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="btnVender" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Group type="102" alignment="1" attributes="0">
-                          <Component id="lblSubtotal" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
-                          <Component id="btnEliminar" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="btnEliminar" alignment="1" min="-2" max="-2" attributes="0"/>
                       <Component id="lblTotal" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="lblImpuesto" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="42" max="32767" attributes="0"/>
               </Group>
@@ -198,21 +193,11 @@
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jScrollPane1" min="-2" pref="253" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="btnEliminar" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
-                          <Component id="lblSubtotal" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="lblImpuesto" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="btnEliminar" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
                   <Component id="lblTotal" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="16" max="32767" attributes="0"/>
+                  <EmptySpace pref="64" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btnVender" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnCancelar" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -310,16 +295,6 @@
         <Component class="javax.swing.JLabel" name="lblCodigo">
           <Properties>
             <Property name="text" type="java.lang.String" value="Codigo:"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="lblSubtotal">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="SubTotal:"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="lblImpuesto">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Impuesto:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lblTotal">

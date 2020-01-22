@@ -34,6 +34,8 @@ public class VentanaCrearOModificar extends javax.swing.JFrame implements Observ
         initComponents();
         this.gestor = gestor;
         productoNuevo = new Producto();
+        lblID.setVisible(false);
+        txfID.setVisible(false);
     }
 
     public VentanaCrearOModificar(ControlFerreteria gestor, Producto productoAModificar) {
@@ -68,8 +70,6 @@ public class VentanaCrearOModificar extends javax.swing.JFrame implements Observ
         txfNombre = new javax.swing.JTextField();
         lblNombre = new javax.swing.JLabel();
         txfID = new javax.swing.JTextField();
-        lblProvedor = new javax.swing.JLabel();
-        txfProvedor = new javax.swing.JTextField();
         lblPrecio = new javax.swing.JLabel();
         txfPrecio = new javax.swing.JTextField();
         lblCantidad = new javax.swing.JLabel();
@@ -77,17 +77,18 @@ public class VentanaCrearOModificar extends javax.swing.JFrame implements Observ
         btnAceptar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         btnHerramienta = new javax.swing.JRadioButton();
-        lblAnchura = new javax.swing.JLabel();
         btnMaterial = new javax.swing.JRadioButton();
         lblCapacidadDeTrabajo = new javax.swing.JLabel();
         cmbCapacidadTrabajo = new javax.swing.JComboBox<>();
-        txfAnchura = new javax.swing.JTextField();
         txfLongitud = new javax.swing.JTextField();
         lblLongitud = new javax.swing.JLabel();
+        lblDescripcion = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txfDescripcion = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Inventario - UNA");
-        setPreferredSize(new java.awt.Dimension(600, 500));
+        setPreferredSize(new java.awt.Dimension(600, 400));
 
         lblID.setText("ID:");
 
@@ -102,14 +103,6 @@ public class VentanaCrearOModificar extends javax.swing.JFrame implements Observ
         txfID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txfIDActionPerformed(evt);
-            }
-        });
-
-        lblProvedor.setText("Provedor:");
-
-        txfProvedor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txfProvedorActionPerformed(evt);
             }
         });
 
@@ -152,8 +145,6 @@ public class VentanaCrearOModificar extends javax.swing.JFrame implements Observ
             }
         });
 
-        lblAnchura.setText("Anchura:");
-
         buttonGroup1.add(btnMaterial);
         btnMaterial.setText("Material");
         btnMaterial.addActionListener(new java.awt.event.ActionListener() {
@@ -168,6 +159,12 @@ public class VentanaCrearOModificar extends javax.swing.JFrame implements Observ
 
         lblLongitud.setText("Longitud:");
 
+        lblDescripcion.setText("Descripcion:");
+
+        txfDescripcion.setColumns(20);
+        txfDescripcion.setRows(5);
+        jScrollPane1.setViewportView(txfDescripcion);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -175,73 +172,75 @@ public class VentanaCrearOModificar extends javax.swing.JFrame implements Observ
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnCancelar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnAceptar))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(lblLongitud)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txfLongitud, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblCapacidadDeTrabajo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cmbCapacidadTrabajo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(layout.createSequentialGroup()
-                                    .addComponent(lblLongitud)
+                                    .addComponent(lblNombre)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(txfLongitud, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(txfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(layout.createSequentialGroup()
-                                    .addComponent(lblAnchura)
+                                    .addComponent(lblID)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(txfAnchura, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblCapacidadDeTrabajo)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cmbCapacidadTrabajo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(lblNombre)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(lblID)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txfID, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(lblPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txfPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(95, 95, 95)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(btnHerramienta)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(btnMaterial))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(lblProvedor)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txfProvedor, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(lblCantidad)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txfCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addGap(0, 21, Short.MAX_VALUE)))
+                                    .addComponent(txfID, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGap(139, 139, 139)
+                            .addComponent(btnHerramienta)
+                            .addGap(18, 18, 18)
+                            .addComponent(btnMaterial))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(lblPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(txfPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(lblDescripcion)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(lblCantidad)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(txfCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addContainerGap(43, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnCancelar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnAceptar)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(78, Short.MAX_VALUE)
+                .addContainerGap(13, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblID)
                     .addComponent(txfID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnHerramienta)
                     .addComponent(btnMaterial))
-                .addGap(43, 43, 43)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblNombre)
-                    .addComponent(txfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblProvedor)
-                    .addComponent(txfProvedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(49, 49, 49)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(43, 43, 43)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblNombre)
+                            .addComponent(txfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(26, 26, 26)
+                                .addComponent(lblDescripcion)
+                                .addGap(42, 42, 42))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblPrecio)
                     .addComponent(txfPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -251,19 +250,15 @@ public class VentanaCrearOModificar extends javax.swing.JFrame implements Observ
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmbCapacidadTrabajo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblCapacidadDeTrabajo))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txfAnchura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblAnchura))
-                .addGap(18, 18, 18)
+                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblLongitud)
                     .addComponent(txfLongitud, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(84, 84, 84)
+                .addGap(65, 65, 65)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAceptar)
                     .addComponent(btnCancelar))
-                .addContainerGap())
+                .addGap(59, 59, 59))
         );
 
         pack();
@@ -276,10 +271,6 @@ public class VentanaCrearOModificar extends javax.swing.JFrame implements Observ
     private void txfIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfIDActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txfIDActionPerformed
-
-    private void txfProvedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfProvedorActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txfProvedorActionPerformed
 
     private void txfPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfPrecioActionPerformed
         // TODO add your handling code here:
@@ -311,15 +302,11 @@ public class VentanaCrearOModificar extends javax.swing.JFrame implements Observ
             cmbCapacidadTrabajo.setVisible(true);
             lblLongitud.setVisible(false);
             txfLongitud.setVisible(false);
-            lblAnchura.setVisible(false);
-            txfAnchura.setVisible(false);
         } else {
             lblCapacidadDeTrabajo.setVisible(false);
             cmbCapacidadTrabajo.setVisible(false);
             lblLongitud.setVisible(true);
             txfLongitud.setVisible(true);
-            lblAnchura.setVisible(true);
-            txfAnchura.setVisible(true);
         }
     }
 
@@ -401,20 +388,19 @@ public class VentanaCrearOModificar extends javax.swing.JFrame implements Observ
     private javax.swing.JRadioButton btnMaterial;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cmbCapacidadTrabajo;
-    private javax.swing.JLabel lblAnchura;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblCantidad;
     private javax.swing.JLabel lblCapacidadDeTrabajo;
+    private javax.swing.JLabel lblDescripcion;
     private javax.swing.JLabel lblID;
     private javax.swing.JLabel lblLongitud;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JLabel lblPrecio;
-    private javax.swing.JLabel lblProvedor;
-    private javax.swing.JTextField txfAnchura;
     private javax.swing.JTextField txfCantidad;
+    private javax.swing.JTextArea txfDescripcion;
     private javax.swing.JTextField txfID;
     private javax.swing.JTextField txfLongitud;
     private javax.swing.JTextField txfNombre;
     private javax.swing.JTextField txfPrecio;
-    private javax.swing.JTextField txfProvedor;
     // End of variables declaration//GEN-END:variables
 }

@@ -43,11 +43,9 @@ public class VentanaInventario extends javax.swing.JFrame implements Observer {
                 = {"ID",
                     "Nombre",
                     "Descripcion",
-                    "Provedor",
                     "Cantidad",
                     "Precio",
                     "Longitud",
-                    "Anchura",
                     "Capacidad de trabajo"
                 };
 
