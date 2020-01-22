@@ -477,6 +477,9 @@ public class VentanaFacturacion extends javax.swing.JFrame implements Observer {
         if (arg instanceof Factura) {
             actualizoFactura((Factura) arg);
         }
+        if(arg instanceof String){
+            lblMensaje.setText((String)arg);
+        }
     }
 
     private void actualizoFactura(Factura facturaNueva) {
