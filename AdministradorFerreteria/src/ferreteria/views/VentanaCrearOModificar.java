@@ -45,16 +45,18 @@ public class VentanaCrearOModificar extends javax.swing.JFrame implements Observ
     public VentanaCrearOModificar(ControlFerreteria gestor, Producto productoAModificar) {
         initComponents();
         this.gestor = gestor;
-        if (1 > 0) {//este if debe ser con el tipo de herramienta que es el producto
+        productoSinModificar = new Producto(productoAModificar);
+        if (productoSinModificar.getTipo().equals("Material")) {
             btnMaterial.setSelected(true);
-            btnHerramienta.setVisible(false);
+            btnHerramienta.setEnabled(false);
         } else {
             btnHerramienta.setSelected(true);
-            btnMaterial.setVisible(false);
+            btnMaterial.setEnabled(false);
         }
         this.txfID.setText(String.valueOf(productoSinModificar.getId()));
         this.txfPrecio.setText(String.valueOf(productoSinModificar.getPrecio()));
         this.txfCantidad.setText(String.valueOf(productoSinModificar.getCantidad()));
+        this.txfNombre.setText(productoSinModificar.getNombre());
         estaModificando = true;
     }
 

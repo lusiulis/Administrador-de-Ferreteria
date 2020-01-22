@@ -1,5 +1,6 @@
 package ferreteria.model.entidades;
 
+import ferreteria.model.DAO.ProductoDAO;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -65,10 +66,17 @@ public class Factura implements Serializable {
         this.detalles = detalles;
     }
 
-    
     @Override
     public String toString() {
-        return "Factura{" + "id=" + id + ", Fecha=" + fecha + ", Vendedor=" + vendedor + ", Total=" + total +", Detalles=" + detalles + '}';
+        return "Factura{" + "id=" + id + ", Fecha=" + fecha + ", Vendedor=" + vendedor + ", Total=" + total + ", Detalles=" + detalles + '}';
+    }
+
+    public void agregarDetalle(Detalle detalle) {
+        detalles.add(detalle);
+        total = 0d;
+        for (Detalle d : detalles) {
+            total += d.getCantidad() * (ProductoDAO.getInstancia().recuperarProducto(d.getIdProducto()).getPrecio());
+        }
     }
 
 }

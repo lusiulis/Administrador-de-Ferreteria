@@ -81,14 +81,14 @@ public class ProductoDAO {
         try(Connection cnx = gestor.obtenerConexion();){
             Statement stm = cnx.createStatement();
             
-            String m =  "UPDATE producto Set Nombre = " +nuevo.getNombre()
-                        +", Cantidad = " + nuevo.getCantidad()
-                        +", Descripcion = " + nuevo.getDescripcion()
-                        +", Precio = " + nuevo.getPrecio()
-                        +", Tipo = " + nuevo.getTipo()
-                        +", Longitud =" +nuevo.getLongitud()
-                        +", CapacidadTrabajo = " + nuevo.getCapacidadTrabajo() 
-                        + " WHERE idProducto = " +nuevo.getId();
+            String m =  "UPDATE producto Set Nombre = '" +nuevo.getNombre()
+                        +"', Cantidad = '" + nuevo.getCantidad()
+                        +"', Descripcion = '" + nuevo.getDescripcion()
+                        +"', Precio = '" + nuevo.getPrecio()
+                        +"', Tipo = '" + nuevo.getTipo()
+                        +"', Longitud ='" +nuevo.getLongitud()
+                        +"', CapacidadTrabajo = '" + nuevo.getCapacidadTrabajo() 
+                        + "' WHERE idProducto = " +nuevo.getId();
             System.out.println(m);
             Exito = stm.executeUpdate(m) == 1;         
         } catch (SQLException ex) {

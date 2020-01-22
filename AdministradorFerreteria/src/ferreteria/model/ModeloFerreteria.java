@@ -6,6 +6,7 @@
 package ferreteria.model;
 
 import ferreteria.model.DAO.ProductoDAO;
+import ferreteria.model.entidades.Detalle;
 import ferreteria.model.entidades.Factura;
 import ferreteria.model.entidades.Producto;
 import java.util.Observable;
@@ -23,12 +24,13 @@ public class ModeloFerreteria extends Observable {
     }
 
     public void agregarProducto(Integer codigo, Integer cantidad) {
-        //TODO    
-        //buscar producto
-        //si producto regreso algo, revisar si se puede vender cantidad solicitada
-        //si se cumple el if anterior, modificar bd
-        //agregar producto a facturaActual
-        //Final TODO
+
+        Producto pro = ProductoDAO.getInstancia().recuperarProducto(codigo);
+        if (pro != null && pro.getCantidad() > cantidad) {
+            facturaActual.agregarDetalle(new Detalle(null, cantidad, null, codigo));
+        }else{
+            //no se pudo agregar
+        }
         setChanged();
         notifyObservers(facturaActual);
     }
@@ -67,5 +69,4 @@ public class ModeloFerreteria extends Observable {
         notifyObservers(facturaActual);
     }
 
-  
 }

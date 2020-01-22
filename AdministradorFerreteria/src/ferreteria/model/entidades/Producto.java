@@ -27,6 +27,16 @@ public class Producto implements Serializable {
         this.capacidadTrabajo = capacidadTrabajo;
     }
 
+    public Producto(Producto pro){
+        this.id = new Integer(pro.getId());
+        this.nombre = new String(pro.getNombre());
+        this.cantidad = new Integer(pro.getCantidad());
+        this.descripcion = pro.getDescripcion();
+        this.precio = new Double(pro.getPrecio());
+        this.tipo = new String(pro.getTipo());
+        this.Longitud = pro.getLongitud();
+        this.capacidadTrabajo = pro.getCapacidadTrabajo();
+    }
     
     public int getId() {
         return id;

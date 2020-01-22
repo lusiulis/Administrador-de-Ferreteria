@@ -6,6 +6,8 @@
 package ferreteria.views;
 
 import ferrateria.control.ControlFerreteria;
+import ferreteria.model.DAO.ProductoDAO;
+import ferreteria.model.entidades.Detalle;
 import ferreteria.model.entidades.Factura;
 import ferreteria.model.entidades.Producto;
 import java.awt.event.ActionEvent;
@@ -480,22 +482,21 @@ public class VentanaFacturacion extends javax.swing.JFrame implements Observer {
 
     private void actualizoFactura(Factura facturaNueva) {
         //actualizar montos
-//        lblSubtotal.setText("Subtotal: " + String.valueOf(facturaNueva.getSubTotal()));
-//        lblTotal.setText("Total: " + String.valueOf(facturaNueva.getTotal()));
-//        lblImpuesto.setText("Impuesto: " + String.valueOf(facturaNueva.getImpuesto()));
+        lblTotal.setText("Total: " + String.valueOf(facturaNueva.getTotal()));
 
         //actualizar lista
-        //actualizarListaProductos(facturaNueva.getProductos());
+        actualizarListaProductos(facturaNueva.getDetalles());
         
         //reset campos
         txfCantidad.setValue(1);
         txfCodigoArticulo.setText("");
     }
 
-    private void actualizarListaProductos(List<Producto> lista) {
+    private void actualizarListaProductos(List<Detalle> lista) {
         modeloTabla.setRowCount(0);
-        for (Producto p : lista) {
-            Object[] datos = {p.getNombre(), p.getCantidad(), p.getPrecio(), p.getPrecio() * p.getCantidad()};
+        for (Detalle d : lista) {
+            Producto p = ProductoDAO.getInstancia().recuperarProducto(d.getIdProducto());
+            Object[] datos = {p.getNombre(), d.getCantidad(), p.getPrecio(), p.getPrecio() * d.getCantidad()};
             modeloTabla.addRow(datos);
         }
     }
