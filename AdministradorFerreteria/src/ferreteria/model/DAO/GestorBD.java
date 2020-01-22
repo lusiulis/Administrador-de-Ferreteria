@@ -52,11 +52,11 @@ public class GestorBD {
     public String getBaseDatos() {
         return baseDatos;
     }
-    
+
     private Properties cfg;
     private String baseDatos;
     private String usuario;
     private String clave;
-    
+
     private static GestorBD instancia = null;
 }
