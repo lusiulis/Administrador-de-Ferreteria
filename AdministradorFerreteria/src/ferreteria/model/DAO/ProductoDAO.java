@@ -26,7 +26,7 @@ public class ProductoDAO {
     }
 
     public Boolean AgregarProducto(Producto nuevo) {
-        if (nuevo.getTipo().equals("material")) {
+        if (nuevo.getTipo().equals("Material")) {
             return AgregarMaterial(nuevo);
         } else {
             return AgregarHerramienta(nuevo);
@@ -161,6 +161,9 @@ public class ProductoDAO {
     
     public Producto recuperarProducto(int id) {
         Producto producto = null;
+    
+    public List<Producto> listarTipoYNombre(String nombre, String tipo){
+        List<Producto> lista = new ArrayList();
 
         try (Connection cnx = gestor.obtenerConexion();
              PreparedStatement stm = cnx.prepareStatement(CMD_BUSCARID);) {
@@ -189,6 +192,34 @@ public class ProductoDAO {
         return producto;
     }
 
+        try (Connection cnx = gestor.obtenerConexion();
+                PreparedStatement stm = cnx.prepareStatement(CMD_LISTARAMBOS);) {
+
+            stm.clearParameters();
+            stm.setString(1, tipo);
+            stm.setString(2, nombre);
+
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                lista.add(new Producto(
+                        rs.getInt("idProducto"),
+                        rs.getString("Nombre"),
+                        rs.getInt("Cantidad"),
+                        rs.getString("Descripcion"),
+                        rs.getDouble("Precio"),
+                        rs.getString("Tipo"),
+                        rs.getDouble("Longitud"),
+                        rs.getString("CapacidadTrabajo")
+                ));
+            }
+
+        } catch (SQLException ex) {
+            System.err.printf("Excepción: '%s'%n", ex.getMessage());
+        }
+
+        return lista;
+    }
+
     private static final String CMD_AGREGARMATERIAL
             = "INSERT INTO producto (Nombre, Cantidad, Descripcion, Precio, Tipo, Longitud) "
             + "VALUES (?, ?, ?, ?, ?, ?);";
@@ -212,4 +243,7 @@ public class ProductoDAO {
             = "SELECT idProducto, Nombre, Precio, Cantidad, Descripcion, Precio, Tipo, Longitud, CapacidadTrabajo FROM producto where idProducto = ?;";
 
 
+    
+     private static final String CMD_LISTARAMBOS
+            = "SELECT idProducto, Nombre, Precio, Cantidad, Descripcion, Precio, Tipo, Longitud, CapacidadTrabajo FROM producto where Tipo like ? AND Nombre like ?;";
 }

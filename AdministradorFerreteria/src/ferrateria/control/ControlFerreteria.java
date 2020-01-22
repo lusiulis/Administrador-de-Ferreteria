@@ -38,45 +38,51 @@ public class ControlFerreteria {
             System.exit(0);
         }
     }
-    
-    public void agregarProductoAFactura(Integer codigo, Integer cantidad){
-        modelo.agregarProducto(codigo,cantidad);
+
+    public void agregarProductoAFactura(Integer codigo, Integer cantidad) {
+        modelo.agregarProducto(codigo, cantidad);
     }
-    
-    public void cancelarFactura(){
+
+    public void cancelarFactura() {
         modelo.cancelarFactura();
     }
-    
-    public void vender(String vendedor){
+
+    public void vender(String vendedor) {
         modelo.vender();
     }
 
     public void solicitarFacturaActual() {
         modelo.getFacturaActual();
     }
-    
-    
-     public void eliminarArticuloDeFactura(Integer numeroArt){
+
+    public void eliminarArticuloDeFactura(Integer numeroArt) {
         modelo.eliminarArticulo(numeroArt);
     }
 
     public List<Producto> buscarArticulos(String nombreProducto, String tipoProducto) {
-        return ProductoDAO.getInstancia().ListarNombre(nombreProducto);
+        if (nombreProducto.equals("")) {
+            if (!tipoProducto.equals("Ambos")) {
+                return ProductoDAO.getInstancia().ListarTipo(tipoProducto);
+            }
+            return ProductoDAO.getInstancia().ListarNombre(nombreProducto);
+        }
+        return ProductoDAO.getInstancia().listarTipoYNombre(nombreProducto, tipoProducto);
     }
 
     public Boolean eliminarDeInventario(Integer codigoArticulo) {
         return ProductoDAO.getInstancia().Borrar(codigoArticulo);
     }
-    
-    public void agregarAInventario(Producto productoNuevo){
+
+    public void agregarAInventario(Producto productoNuevo) {
         ProductoDAO.getInstancia().AgregarProducto(productoNuevo);
-        
+
     }
-    public void modificarEnInventario(Producto productoAModificar){
-        
+
+    public void modificarEnInventario(Producto productoAModificar) {
+
     }
 
     public Producto getProducto(Integer codigoProducto) {
         return ProductoDAO.getInstancia().recuperarProducto(codigoProducto);
-      }
+    }
 }

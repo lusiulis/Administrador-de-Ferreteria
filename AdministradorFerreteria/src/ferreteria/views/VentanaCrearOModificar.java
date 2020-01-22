@@ -390,12 +390,12 @@ public class VentanaCrearOModificar extends javax.swing.JFrame implements Observ
                 productoNuevo.setNombre(txfNombre.getText().trim());
                 productoNuevo.setPrecio(Double.valueOf(txfPrecio.getText().trim()));
                 if (btnHerramienta.isSelected()) {
-                    productoNuevo.setTipo("herramienta");
+                    productoNuevo.setTipo("Herramienta");
                     productoNuevo.setCapacidadTrabajo((String) cmbCapacidadTrabajo.getSelectedItem());
                     productoNuevo.setLongitud(null);
                 } else {
                     //es material
-                    productoNuevo.setTipo("material");
+                    productoNuevo.setTipo("Material");
                     productoNuevo.setLongitud(Double.valueOf(txfLongitud.getText().trim()));
                     productoNuevo.setCapacidadTrabajo(null);
                 }

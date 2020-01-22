@@ -27,6 +27,7 @@ public class VentanaInventario extends javax.swing.JFrame implements Observer {
     }
 
     private void configurar() {
+        setTitle("Inventario - UNA");
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
 
@@ -39,8 +40,8 @@ public class VentanaInventario extends javax.swing.JFrame implements Observer {
         setResizable(false);
         cmbTipo.removeAllItems();
         cmbTipo.addItem("Ambos");
-        cmbTipo.addItem("Herramientas");
-        cmbTipo.addItem("Materiales");
+        cmbTipo.addItem("Herramienta");
+        cmbTipo.addItem("Material");
         String[] nombreColumnas
                 = {"ID",
                     "Nombre",
