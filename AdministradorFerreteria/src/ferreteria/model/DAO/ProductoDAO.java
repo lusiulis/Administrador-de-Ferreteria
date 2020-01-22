@@ -5,8 +5,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ProductoDAO {
 
@@ -78,6 +81,20 @@ public class ProductoDAO {
     public boolean Modificar(Producto nuevo){
         boolean Exito = false;
         
+        try(Connection cnx = gestor.obtenerConexion();){
+            Statement stm = cnx.createStatement();
+            Exito = stm.executeUpdate("UPDATE producto Set Nombre = "+nuevo.getNombre()
+                        +" , Cantidad = "+nuevo.getCantidad()
+                        +" , Descripcion = "+nuevo.getDescripcion()
+                        +" , Precio = "+nuevo.getPrecio()
+                        +" , Tipo = "+ nuevo.getTipo()
+                        +" , Longitud = "+nuevo.getLongitud()
+                        +" , CapacidadTrabajo = "+ nuevo.getCapacidadTrabajo() 
+                        + " where idProducto = "+nuevo.getId()) == 1;         
+        } catch (SQLException ex) {
+            System.err.printf("Excepción: '%s'%n", ex.getMessage());
+        }
+        
         return Exito;
     }  
 
@@ -86,7 +103,7 @@ public class ProductoDAO {
         boolean Exito = false;
 
         try (Connection cnx = gestor.obtenerConexion();
-                PreparedStatement stm = cnx.prepareStatement(CMD_BORRAR);) {
+             PreparedStatement stm = cnx.prepareStatement(CMD_BORRAR);) {
 
             stm.clearParameters();
             stm.setInt(1, i);
@@ -200,14 +217,11 @@ public class ProductoDAO {
             = "delete from producto where idProducto=?";
 
     private static final String CMD_LISTARNOMBRE
-            = "SELECT idProducto, Nombre, Precio, Cantidad, Descripcion, Precio, Tipo, Longitud, CapacidadTrabajo FROM producto where Nombre like ?;";
+            = "SELECT idProducto, Nombre, Precio, Cantidad, Descripcion, Tipo, Longitud, CapacidadTrabajo FROM producto where Nombre like ?;";
 
     private static final String CMD_LISTARTIPO
-            = "SELECT idProducto, Nombre, Precio, Cantidad, Descripcion, Precio, Tipo, Longitud, CapacidadTrabajo FROM producto where Tipo like ?;";
+            = "SELECT idProducto, Nombre, Precio, Cantidad, Descripcion, Tipo, Longitud, CapacidadTrabajo FROM producto where Tipo like ?;";
 
-    
-    private static final String CMD_MODIFICAR
-            = "";
     private static final String CMD_BUSCARID
             = "SELECT idProducto, Nombre, Precio, Cantidad, Descripcion, Precio, Tipo, Longitud, CapacidadTrabajo FROM producto where idProducto = ?;";
 
