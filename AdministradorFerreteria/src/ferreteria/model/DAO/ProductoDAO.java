@@ -25,9 +25,6 @@ public class ProductoDAO {
         return instancia;
     }
 
-
-    public boolean AgregarMaterial(Producto nuevo) {
-
     public Boolean AgregarProducto(Producto nuevo) {
         if (nuevo.getTipo().equals("material")) {
             return AgregarMaterial(nuevo);
@@ -36,7 +33,7 @@ public class ProductoDAO {
         }
     }
 
-    public boolean AgregarMaterial(Producto Nuevo) {
+    public boolean AgregarMaterial(Producto nuevo) {
 
         boolean Exito = false;
         try (Connection cnx = gestor.obtenerConexion();
@@ -60,7 +57,7 @@ public class ProductoDAO {
     public boolean AgregarHerramienta(Producto nuevo) {
         boolean Exito = false;
         try (Connection cnx = gestor.obtenerConexion();
-                PreparedStatement stm = cnx.prepareStatement(CMD_AGREGARHERRAMIENTA);) {
+             PreparedStatement stm = cnx.prepareStatement(CMD_AGREGARHERRAMIENTA);) {
 
             stm.clearParameters();
             stm.setString(1, nuevo.getNombre());
@@ -82,12 +79,7 @@ public class ProductoDAO {
         boolean Exito = false;
         
         return Exito;
-    }
-    
-
-    public Producto recuperarProducto(Integer codigoProducto) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    }  
 
 
     public boolean Borrar(int i) {
@@ -167,7 +159,7 @@ public class ProductoDAO {
         return lista;
     }
     
-    public Producto Recuperar(int id) {
+    public Producto recuperarProducto(int id) {
         Producto producto = null;
 
         try (Connection cnx = gestor.obtenerConexion();
