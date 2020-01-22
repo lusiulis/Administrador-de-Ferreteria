@@ -8,8 +8,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class ProductoDAO {
 
@@ -83,18 +81,20 @@ public class ProductoDAO {
         
         try(Connection cnx = gestor.obtenerConexion();){
             Statement stm = cnx.createStatement();
-            Exito = stm.executeUpdate("UPDATE producto Set Nombre = "+nuevo.getNombre()
-                        +" , Cantidad = "+nuevo.getCantidad()
-                        +" , Descripcion = "+nuevo.getDescripcion()
-                        +" , Precio = "+nuevo.getPrecio()
-                        +" , Tipo = "+ nuevo.getTipo()
-                        +" , Longitud = "+nuevo.getLongitud()
-                        +" , CapacidadTrabajo = "+ nuevo.getCapacidadTrabajo() 
-                        + " where idProducto = "+nuevo.getId()) == 1;         
+            
+            String m =  "UPDATE producto Set Nombre = " +nuevo.getNombre()
+                        +", Cantidad = " + nuevo.getCantidad()
+                        +", Descripcion = " + nuevo.getDescripcion()
+                        +", Precio = " + nuevo.getPrecio()
+                        +", Tipo = " + nuevo.getTipo()
+                        +", Longitud =" +nuevo.getLongitud()
+                        +", CapacidadTrabajo = " + nuevo.getCapacidadTrabajo() 
+                        + " WHERE idProducto = " +nuevo.getId();
+            System.out.println(m);
+            Exito = stm.executeUpdate(m) == 1;         
         } catch (SQLException ex) {
             System.err.printf("Excepción: '%s'%n", ex.getMessage());
         }
-        
         return Exito;
     }  
 
