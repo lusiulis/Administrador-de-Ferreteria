@@ -4,7 +4,9 @@ import ferreteria.model.entidades.Factura;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class FacturaDAO {
 
@@ -23,25 +25,34 @@ public class FacturaDAO {
         return instancia;
     }
 
-    public boolean AgregarFactura(Factura nuevo) {
-        boolean Exito = false;
-
+    public int AgregarFactura(Factura nuevo) {
+        int id = 0;
         try (Connection cnx = gestor.obtenerConexion();
-                PreparedStatement stm = cnx.prepareStatement(CMD_AGREGARFACTURA)) {
+             PreparedStatement stm = cnx.prepareStatement(CMD_AGREGARFACTURA)) {
 
             stm.clearParameters();
             stm.setDate(1, Date.valueOf(nuevo.getFecha()));
             stm.setString(2, nuevo.getVendedor());
             stm.setDouble(3, nuevo.getTotal());
 
-            Exito = stm.executeUpdate() == 1;
+            stm.executeUpdate();
+            
+            Statement st = cnx.createStatement();
+            st.execute(CMD_ULTIMO);
+            ResultSet rs = st.getResultSet();
+            while(rs.next()){
+                id = rs.getInt(1);
+            }
         } catch (SQLException ex) {
             System.err.printf("Excepción: '%s'%n", ex.getMessage());
         }
-        return Exito;
+        return id;
     }
 
     private static final String CMD_AGREGARFACTURA
             = "INSERT INTO factura (Fecha, Vendedor, Total) "
             + "VALUES (?, ?, ?)";
+    
+    private static final String CMD_ULTIMO
+            = "select @last_id := max(idFactura) from factura";
 }
