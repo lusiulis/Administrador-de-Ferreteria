@@ -169,15 +169,18 @@ public class ProductoDAO {
             stm.setInt(1, id);
 
             ResultSet rs = stm.executeQuery();
-            producto = new Producto(
-            rs.getInt("idProducto"),
+            while(rs.next()){
+                producto = new Producto(
+                        rs.getInt("idProducto"),
                         rs.getString("Nombre"),
                         rs.getInt("Cantidad"),
                         rs.getString("Descripcion"),
                         rs.getDouble("Precio"),
                         rs.getString("Tipo"),
                         rs.getDouble("Longitud"),
-                        rs.getString("CapacidadTrabajo"));
+                        rs.getString("CapacidadTrabajo")
+                );
+            }
 
         } catch (SQLException ex) {
             System.err.printf("Excepción: '%s'%n", ex.getMessage());
