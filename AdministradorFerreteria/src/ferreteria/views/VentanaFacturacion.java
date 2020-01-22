@@ -100,8 +100,6 @@ public class VentanaFacturacion extends javax.swing.JFrame implements Observer {
         btnAgregar = new javax.swing.JButton();
         txfCodigoArticulo = new javax.swing.JTextField();
         lblCodigo = new javax.swing.JLabel();
-        lblSubtotal = new javax.swing.JLabel();
-        lblImpuesto = new javax.swing.JLabel();
         lblTotal = new javax.swing.JLabel();
         txfCantidad = new javax.swing.JSpinner();
         lblCantidad = new javax.swing.JLabel();
@@ -223,10 +221,6 @@ public class VentanaFacturacion extends javax.swing.JFrame implements Observer {
 
         lblCodigo.setText("Codigo:");
 
-        lblSubtotal.setText("SubTotal:");
-
-        lblImpuesto.setText("Impuesto:");
-
         lblTotal.setText("Total:");
 
         lblCantidad.setText("Cantidad:");
@@ -265,12 +259,8 @@ public class VentanaFacturacion extends javax.swing.JFrame implements Observer {
                         .addComponent(btnCancelar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnVender))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(lblSubtotal)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnEliminar))
-                    .addComponent(lblTotal)
-                    .addComponent(lblImpuesto))
+                    .addComponent(btnEliminar, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblTotal))
                 .addContainerGap(42, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -287,18 +277,11 @@ public class VentanaFacturacion extends javax.swing.JFrame implements Observer {
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnEliminar))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addComponent(lblSubtotal)))
-                .addGap(18, 18, 18)
-                .addComponent(lblImpuesto)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnEliminar)
+                .addGap(17, 17, 17)
                 .addComponent(lblTotal)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnVender)
                     .addComponent(btnCancelar)))
@@ -480,9 +463,7 @@ public class VentanaFacturacion extends javax.swing.JFrame implements Observer {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblCantidad;
     private javax.swing.JLabel lblCodigo;
-    private javax.swing.JLabel lblImpuesto;
     private javax.swing.JLabel lblMensaje;
-    private javax.swing.JLabel lblSubtotal;
     private javax.swing.JLabel lblTotal;
     private javax.swing.JTable tablaArticulos;
     private javax.swing.JSpinner txfCantidad;

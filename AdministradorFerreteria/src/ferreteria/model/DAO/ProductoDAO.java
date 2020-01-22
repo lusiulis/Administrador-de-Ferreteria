@@ -25,7 +25,19 @@ public class ProductoDAO {
         return instancia;
     }
 
+
     public boolean AgregarMaterial(Producto nuevo) {
+
+    public Boolean AgregarProducto(Producto nuevo) {
+        if (nuevo.getTipo().equals("material")) {
+            return AgregarMaterial(nuevo);
+        } else {
+            return AgregarHerramienta(nuevo);
+        }
+    }
+
+    public boolean AgregarMaterial(Producto Nuevo) {
+
         boolean Exito = false;
         try (Connection cnx = gestor.obtenerConexion();
                 PreparedStatement stm = cnx.prepareStatement(CMD_AGREGARMATERIAL);) {
@@ -65,12 +77,19 @@ public class ProductoDAO {
         return Exito;
     }
 
+
     public boolean Modificar(Producto nuevo){
         boolean Exito = false;
         
         return Exito;
     }
     
+
+    public Producto recuperarProducto(Integer codigoProducto) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+
     public boolean Borrar(int i) {
         boolean Exito = false;
 
@@ -190,9 +209,12 @@ public class ProductoDAO {
 
     private static final String CMD_LISTARTIPO
             = "SELECT idProducto, Nombre, Precio, Cantidad, Descripcion, Precio, Tipo, Longitud, CapacidadTrabajo FROM producto where Tipo like ?;";
+
     
     private static final String CMD_MODIFICAR
             = "";
     private static final String CMD_BUSCARID
             = "SELECT idProducto, Nombre, Precio, Cantidad, Descripcion, Precio, Tipo, Longitud, CapacidadTrabajo FROM producto where idProducto = ?;";
+
+
 }
