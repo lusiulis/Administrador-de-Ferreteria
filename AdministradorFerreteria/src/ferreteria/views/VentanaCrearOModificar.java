@@ -52,12 +52,14 @@ public class VentanaCrearOModificar extends javax.swing.JFrame implements Observ
         } else {
             btnHerramienta.setSelected(true);
             btnMaterial.setEnabled(false);
+            cmbCapacidadTrabajo.setSelectedItem(productoSinModificar.getCapacidadTrabajo());
         }
         this.txfID.setText(String.valueOf(productoSinModificar.getId()));
         this.txfPrecio.setText(String.valueOf(productoSinModificar.getPrecio()));
         this.txfCantidad.setText(String.valueOf(productoSinModificar.getCantidad()));
         this.txfNombre.setText(productoSinModificar.getNombre());
         estaModificando = true;
+        productoNuevo = productoSinModificar;
     }
 
     /**
@@ -387,7 +389,7 @@ public class VentanaCrearOModificar extends javax.swing.JFrame implements Observ
     private void intentarGuardar() {
         if (todoValido()) {
             try {
-                productoNuevo.setCantidad(Integer.valueOf(txfCantidad.getText().trim()));
+                productoNuevo.setCantidad(Integer.valueOf(txfCantidad.getText()));
                 productoNuevo.setDescripcion(txfDescripcion.getText());
                 productoNuevo.setNombre(txfNombre.getText().trim());
                 productoNuevo.setPrecio(Double.valueOf(txfPrecio.getText().trim()));
@@ -404,7 +406,9 @@ public class VentanaCrearOModificar extends javax.swing.JFrame implements Observ
                 
                 //todo se setio bien, intentar guardarNuevo o modificar
                 if(estaModificando){
-                    
+                    productoNuevo.setId(productoSinModificar.getId());
+                    gestor.modificarEnInventario(productoNuevo);
+                    cerrarVentana();
                 }else{
                     gestor.agregarAInventario(productoNuevo);
                     cerrarVentana();
@@ -412,6 +416,7 @@ public class VentanaCrearOModificar extends javax.swing.JFrame implements Observ
                 
             } catch (Exception e) {
                 //algo paso, lo mas seguro es que no el usuario no digito descripcion, ya que todoValido() no revisa ese campo
+                System.out.println("Error: "+e.getLocalizedMessage() + e.getMessage());
             }
             
         } else {
@@ -428,7 +433,7 @@ public class VentanaCrearOModificar extends javax.swing.JFrame implements Observ
             if (txfNombre.getText().trim().isEmpty()) {
                 todoValido = false;
             }
-            if (Integer.valueOf(txfPrecio.getText()) < 0) {
+            if (Double.valueOf(txfPrecio.getText()) < 0) {
                 todoValido = false;
             }
             if (btnMaterial.isSelected()) {

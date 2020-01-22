@@ -80,13 +80,16 @@ public class ProductoDAO {
         
         try(Connection cnx = gestor.obtenerConexion();){
             Statement stm = cnx.createStatement();
-            
+            Double longitud =0d;
+            if(nuevo.getLongitud()!=null){
+                longitud=nuevo.getLongitud();
+            }
             String m =  "UPDATE producto Set Nombre = '" +nuevo.getNombre()
                         +"', Cantidad = '" + nuevo.getCantidad()
                         +"', Descripcion = '" + nuevo.getDescripcion()
                         +"', Precio = '" + nuevo.getPrecio()
                         +"', Tipo = '" + nuevo.getTipo()
-                        +"', Longitud ='" +nuevo.getLongitud()
+                        +"', Longitud ='" +longitud
                         +"', CapacidadTrabajo = '" + nuevo.getCapacidadTrabajo() 
                         + "' WHERE idProducto = " +nuevo.getId();
             System.out.println(m);
