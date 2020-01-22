@@ -31,7 +31,7 @@ public class FacturaDAO {
              PreparedStatement stm = cnx.prepareStatement(CMD_AGREGARFACTURA)) {
 
             stm.clearParameters();
-            stm.setDate(1, new Date(1,1,1));
+            stm.setDate(1, Date.valueOf(nuevo.getFecha()));
             stm.setString(2, nuevo.getVendedor());
             stm.setDouble(3, nuevo.getTotal());
 
