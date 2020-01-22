@@ -16,6 +16,7 @@ public class Factura implements Serializable {
 
     public Factura() {
         detalles = new ArrayList<>();
+        total=0d;
     }
 
     public Factura(Integer id, String vendedor, Double total, LocalDate fecha, List<Detalle> detalles) {
@@ -73,10 +74,18 @@ public class Factura implements Serializable {
 
     public void agregarDetalle(Detalle detalle) {
         detalles.add(detalle);
+        actualizarTotal();
+    }
+
+    public void remover(int posicion) {
+        detalles.remove(posicion);
+        actualizarTotal();
+    }
+
+    private void actualizarTotal() {
         total = 0d;
         for (Detalle d : detalles) {
             total += d.getCantidad() * (ProductoDAO.getInstancia().recuperarProducto(d.getIdProducto()).getPrecio());
         }
     }
-
 }

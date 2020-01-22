@@ -48,7 +48,7 @@ public class ControlFerreteria {
     }
 
     public void vender(String vendedor) {
-        modelo.vender();
+        modelo.vender(vendedor);
     }
 
     public void solicitarFacturaActual() {
@@ -73,13 +73,12 @@ public class ControlFerreteria {
         return ProductoDAO.getInstancia().Borrar(codigoArticulo);
     }
 
-    public void agregarAInventario(Producto productoNuevo) {
-        ProductoDAO.getInstancia().AgregarProducto(productoNuevo);
-
+    public Boolean agregarAInventario(Producto productoNuevo) {
+        return ProductoDAO.getInstancia().AgregarProducto(productoNuevo);
     }
 
-    public void modificarEnInventario(Producto productoAModificar) {
-
+    public Boolean modificarEnInventario(Producto productoAModificar) {
+        return ProductoDAO.getInstancia().Modificar(productoAModificar);
     }
 
     public Producto getProducto(Integer codigoProducto) {

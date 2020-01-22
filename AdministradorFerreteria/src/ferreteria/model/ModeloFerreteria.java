@@ -5,10 +5,13 @@
  */
 package ferreteria.model;
 
+import ferreteria.model.DAO.DetalleDAO;
+import ferreteria.model.DAO.FacturaDAO;
 import ferreteria.model.DAO.ProductoDAO;
 import ferreteria.model.entidades.Detalle;
 import ferreteria.model.entidades.Factura;
 import ferreteria.model.entidades.Producto;
+import java.time.LocalDate;
 import java.util.Observable;
 
 /**
@@ -36,19 +39,23 @@ public class ModeloFerreteria extends Observable {
     }
 
     public void cancelarFactura() {
-        //TODO
-        //agregar a bd todos los productos que pertenecen a factura actual
-
-        //final TODO
         facturaActual = new Factura();
         setChanged();
         notifyObservers(facturaActual);
     }
 
-    public void vender() {
-        //TODO
-        //agregar venta a bd
-        //Final TODO
+    public void vender(String vendedor) {
+        facturaActual.setVendedor(vendedor);
+        facturaActual.setFecha(LocalDate.now());
+        int idFactura = FacturaDAO.getInstancia().AgregarFactura(facturaActual);
+        for(Detalle d: facturaActual.getDetalles()){
+            d.setIdFactura(idFactura);
+            DetalleDAO.getInstancia().AgregarDetalle(d);
+            Producto producto = ProductoDAO.getInstancia().recuperarProducto(d.getIdProducto());
+            producto.setCantidad(producto.getCantidad()-d.getCantidad());
+            ProductoDAO.getInstancia().Modificar(producto);
+        }
+        
         facturaActual = new Factura();
         setChanged();
         notifyObservers(facturaActual);
@@ -59,12 +66,8 @@ public class ModeloFerreteria extends Observable {
         notifyObservers(facturaActual);
     }
 
-    public void eliminarArticulo(int row) {
-        //Producto productoRemovido = facturaActual.getProductos().remove(row);
-        //TODO
-        //agregar productoRemovido a base de datos
-        //Final TODO
-        //facturaActual.actualizarTotales();
+    public void eliminarArticulo(Integer posicion) {
+        facturaActual.remover(posicion);
         setChanged();
         notifyObservers(facturaActual);
     }

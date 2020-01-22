@@ -92,7 +92,6 @@ public class ProductoDAO {
                         +"', Longitud ='" +longitud
                         +"', CapacidadTrabajo = '" + nuevo.getCapacidadTrabajo() 
                         + "' WHERE idProducto = " +nuevo.getId();
-            System.out.println(m);
             Exito = stm.executeUpdate(m) == 1;         
         } catch (SQLException ex) {
             System.err.printf("Excepción: '%s'%n", ex.getMessage());
