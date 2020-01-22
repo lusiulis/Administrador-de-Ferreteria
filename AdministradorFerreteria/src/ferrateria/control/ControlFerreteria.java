@@ -8,6 +8,7 @@ package ferrateria.control;
 import ferreteria.model.DAO.ProductoDAO;
 import ferreteria.model.ModeloFerreteria;
 import ferreteria.model.entidades.Producto;
+import java.util.List;
 import java.util.Observer;
 
 /**
@@ -59,10 +60,12 @@ public class ControlFerreteria {
         modelo.eliminarArticulo(numeroArt);
     }
 
-    public void buscarArticulos(String nombreProducto, String tipoProducto) {
+    public List<Producto> buscarArticulos(String nombreProducto, String tipoProducto) {
+        return ProductoDAO.getInstancia().ListarNombre(nombreProducto);
     }
 
-    public void eliminarDeInventario(Integer codigoArticulo) {
+    public Boolean eliminarDeInventario(Integer codigoArticulo) {
+        return ProductoDAO.getInstancia().Borrar(codigoArticulo);
     }
     
     public void agregarAInventario(Producto productoNuevo){
@@ -74,6 +77,6 @@ public class ControlFerreteria {
     }
 
     public Producto getProducto(Integer codigoProducto) {
-        return new Producto();
-    }
+        return ProductoDAO.getInstancia().recuperarProducto(codigoProducto);
+      }
 }

@@ -1,8 +1,10 @@
 package ferreteria.views;
 
 import ferrateria.control.ControlFerreteria;
+import ferreteria.model.entidades.Producto;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.JOptionPane;
@@ -215,7 +217,7 @@ public class VentanaInventario extends javax.swing.JFrame implements Observer {
             nombreProducto = txfNombreProducto.getText().trim();
         } catch (Exception e) {
         }
-        gestor.buscarArticulos(nombreProducto, (String) cmbTipo.getSelectedItem());
+        actualizarTabla(gestor.buscarArticulos(nombreProducto, (String) cmbTipo.getSelectedItem()));
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
@@ -227,7 +229,9 @@ public class VentanaInventario extends javax.swing.JFrame implements Observer {
             if (JOptionPane.showConfirmDialog(null, "¿Desea borrar el producto \" " + modeloTabla.getValueAt(Tabla.getSelectedRow(), 1) + " \" del inventario?", "Confirmación",
                     JOptionPane.YES_NO_OPTION,
                     JOptionPane.WARNING_MESSAGE) == JOptionPane.YES_OPTION) {
-                gestor.eliminarDeInventario((Integer) Tabla.getValueAt(Tabla.getSelectedRow(), 0));
+                if(gestor.eliminarDeInventario((Integer) Tabla.getValueAt(Tabla.getSelectedRow(), 0))){
+                    modeloTabla.removeRow(Tabla.getSelectedRow());
+                }
             }
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
@@ -249,5 +253,13 @@ public class VentanaInventario extends javax.swing.JFrame implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
+    }
+
+    private void actualizarTabla(List<Producto> lista) {
+        modeloTabla.setRowCount(0);
+        for (Producto p : lista) {
+            Object[] datos = {p.getId(),p.getNombre(),p.getDescripcion(), p.getCantidad(), p.getPrecio(), p.getLongitud(), p.getCapacidadTrabajo()};
+            modeloTabla.addRow(datos);
+        }
     }
 }

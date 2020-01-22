@@ -17,24 +17,23 @@ public class ProductoDAO {
     private ProductoDAO() {
         this.gestor = GestorBD.obtenerInstancia();
     }
-    
-    public static ProductoDAO getInstancia(){
-        if(instancia == null){
+
+    public static ProductoDAO getInstancia() {
+        if (instancia == null) {
             instancia = new ProductoDAO();
         }
         return instancia;
     }
-    
-    public Integer AgregarProducto(Producto nuevo){
-        if(nuevo.getTipo().equals("material")){
-            AgregarMaterial(nuevo);
-        }else{
-            AgregarHerramienta(nuevo);
+
+    public Boolean AgregarProducto(Producto nuevo) {
+        if (nuevo.getTipo().equals("material")) {
+            return AgregarMaterial(nuevo);
+        } else {
+            return AgregarHerramienta(nuevo);
         }
-        return 0;
     }
-    
-    public boolean AgregarMaterial(Producto Nuevo){
+
+    public boolean AgregarMaterial(Producto Nuevo) {
         boolean Exito = false;
         try (Connection cnx = gestor.obtenerConexion();
                 PreparedStatement stm = cnx.prepareStatement(CMD_AGREGARMATERIAL);) {
@@ -72,6 +71,10 @@ public class ProductoDAO {
             System.err.printf("Excepción: '%s'%n", ex.getMessage());
         }
         return Exito;
+    }
+
+    public Producto recuperarProducto(Integer codigoProducto) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public boolean Borrar(int i) {
@@ -166,4 +169,5 @@ public class ProductoDAO {
 
     private static final String CMD_LISTARTIPO
             = "SELECT idProducto, Nombre, Precio, Cantidad, Descripcion, Precio, Tipo, Longitud, CapacidadTrabajo FROM producto where Tipo like ?;";
+
 }
