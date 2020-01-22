@@ -14,10 +14,6 @@ import javax.swing.UnsupportedLookAndFeelException;
 public class AdministradorFerreteria {
 
     public static void main(String[] args) throws SQLException{ 
-        List<Producto> lista = ProductoDAO.getInstancia().listarNombre("la");
-        lista.forEach(x->{
-            System.out.println(x);
-        });
        try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             JFrame.setDefaultLookAndFeelDecorated(true);
