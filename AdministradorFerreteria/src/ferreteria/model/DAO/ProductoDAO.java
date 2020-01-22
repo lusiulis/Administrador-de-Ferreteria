@@ -135,6 +135,30 @@ public class ProductoDAO {
         return r;
     }
     
+    public List<Producto> listarNombre(String i) throws SQLException {
+        List<Producto> r = new ArrayList<>();
+
+        try (Connection cnx = getConexion();
+             PreparedStatement stm = cnx.prepareStatement(CMD_LISTAR_NOMBRE);) {
+            
+            stm.setString(1, "%"+i+"%");
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                r.add(new Producto(
+                        rs.getInt("idProducto"),
+                        rs.getString("Nombre"),
+                        rs.getDouble("Precio"),
+                        rs.getInt("Cantidad"),
+                        rs.getString("Descripcion"),
+                        rs.getString("Provedor"),
+                        rs.getInt("idTipo"),
+                        rs.getInt("idFactura")
+                ));
+            }
+        }
+        return r;
+    }
+    
     public boolean Borrar(int i) throws SQLException{
          boolean exito = false;
          
@@ -157,6 +181,9 @@ public class ProductoDAO {
 
     private static final String CMD_LISTAR_IDTIPO
             = "SELECT idProducto, Nombre, Precio, Cantidad, Descripcion, Provedor, idTipo, idFactura FROM producto where idTipo=?;";
+    
+    private static final String CMD_LISTAR_NOMBRE
+            = "SELECT idProducto, Nombre, Precio, Cantidad, Descripcion, Provedor, idTipo, idFactura FROM producto where Nombre like ?;";
     
     private static final String CMD_LISTAR_IDFACTURA
             = "SELECT idProducto, Nombre, Precio, Cantidad, Descripcion, Provedor, idTipo, idFactura FROM producto where idFactura=?;";
