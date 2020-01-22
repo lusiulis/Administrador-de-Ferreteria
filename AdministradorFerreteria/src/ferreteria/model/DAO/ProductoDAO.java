@@ -18,7 +18,7 @@ public class ProductoDAO {
         this.gestor = GestorBD.obtenerInstancia();
     }
 
-    public ProductoDAO getInstancia() {
+    public static ProductoDAO getInstancia() {
         if (instancia == null) {
             instancia = new ProductoDAO();
         }
