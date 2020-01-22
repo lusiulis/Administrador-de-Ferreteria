@@ -97,8 +97,6 @@ public class ProductoDAO {
         return Exito;
     }  
 
-        return Exito;
-    }
 
     public boolean Borrar(int i) {
         boolean Exito = false;
@@ -252,8 +250,6 @@ public class ProductoDAO {
     private static final String CMD_LISTARTIPO
             = "SELECT idProducto, Nombre, Precio, Cantidad, Descripcion, Tipo, Longitud, CapacidadTrabajo FROM producto where Tipo like ?;";
 
-    private static final String CMD_MODIFICAR
-            = "";
     private static final String CMD_BUSCARID
             = "SELECT idProducto, Nombre, Precio, Cantidad, Descripcion, Precio, Tipo, Longitud, CapacidadTrabajo FROM producto where idProducto = ?;";
 
