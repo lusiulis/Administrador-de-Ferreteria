@@ -1,11 +1,11 @@
 package administradorferreteria;
 
 import ferrateria.control.ControlFerreteria;
+
 import ferreteria.model.DAO.asd;
 import ferreteria.model.entidades.Producto;
 import ferreteria.views.VentanaFacturacion;
 import java.sql.SQLException;
-import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
@@ -24,7 +24,6 @@ public class AdministradorFerreteria {
     }
 
     private void iniciar() {
-       
         SwingUtilities.invokeLater(() -> {
             new VentanaFacturacion( new ControlFerreteria()).init();
         });

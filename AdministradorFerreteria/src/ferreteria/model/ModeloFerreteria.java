@@ -16,7 +16,6 @@ import java.util.Observable;
 public class ModeloFerreteria extends Observable {
 
     private Factura facturaActual;
-    int f = 0;
 
     public ModeloFerreteria() {
         facturaActual = new Factura();
@@ -29,8 +28,6 @@ public class ModeloFerreteria extends Observable {
         //si se cumple el if anterior, modificar bd
         //agregar producto a facturaActual
         //Final TODO
-        facturaActual.agregarProducto(new Producto(0, "Jabon", 500, f, "Jaobn de manos", "hfsfds", 1, 0));
-        f++;
         setChanged();
         notifyObservers(facturaActual);
     }
@@ -60,11 +57,11 @@ public class ModeloFerreteria extends Observable {
     }
 
     public void eliminarArticulo(int row) {
-        Producto productoRemovido = facturaActual.getProductos().remove(row);
+        //Producto productoRemovido = facturaActual.getProductos().remove(row);
         //TODO
         //agregar productoRemovido a base de datos
         //Final TODO
-        facturaActual.actualizarTotales();
+        //facturaActual.actualizarTotales();
         setChanged();
         notifyObservers(facturaActual);
     }

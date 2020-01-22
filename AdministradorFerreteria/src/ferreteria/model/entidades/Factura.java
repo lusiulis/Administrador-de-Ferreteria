@@ -1,117 +1,74 @@
 package ferreteria.model.entidades;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Factura implements Serializable {
 
-    private int id;
-    private String Fecha;
-    private String Vendedor;
-    private double Total;
-    private double SubTotal;
-    private double Impuesto;
-    private double Descuento;
-    private final Double IMPUESTO = 0.13;//porcentaje de impuesto
-
-    private List<Producto> productos;
+    private Integer id;
+    private String vendedor;
+    private Double total;
+    private LocalDate fecha;
+    private List<Detalle> detalles;
 
     public Factura() {
-        productos = new ArrayList();
+        detalles = new ArrayList<>();
     }
 
-    public Factura(int id, String Fecha, String Vendedor, double Total, double SubTotal, double Impuesto, double Descuento) {
+    public Factura(Integer id, String vendedor, Double total, LocalDate fecha, List<Detalle> detalles) {
         this.id = id;
-        this.Fecha = Fecha;
-        this.Vendedor = Vendedor;
-        this.Total = Total;
-        this.SubTotal = SubTotal;
-        this.Impuesto = Impuesto;
-        this.Descuento = Descuento;
+        this.vendedor = vendedor;
+        this.total = total;
+        this.fecha = fecha;
+        this.detalles = detalles;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public String getFecha() {
-        return Fecha;
-    }
-
-    public void setFecha(String Fecha) {
-        this.Fecha = Fecha;
-    }
-
     public String getVendedor() {
-        return Vendedor;
+        return vendedor;
     }
 
-    public void setVendedor(String Vendedor) {
-        this.Vendedor = Vendedor;
+    public void setVendedor(String vendedor) {
+        this.vendedor = vendedor;
     }
 
-    public double getTotal() {
-        return Total;
+    public Double getTotal() {
+        return total;
     }
 
-    public void setTotal(double Total) {
-        this.Total = Total;
+    public void setTotal(Double total) {
+        this.total = total;
     }
 
-    public double getSubTotal() {
-        return SubTotal;
+    public LocalDate getFecha() {
+        return fecha;
     }
 
-    public void setSubTotal(double SubTotal) {
-        this.SubTotal = SubTotal;
+    public void setFecha(LocalDate fecha) {
+        this.fecha = fecha;
     }
 
-    public double getImpuesto() {
-        return Impuesto;
+    public List<Detalle> getDetalles() {
+        return detalles;
     }
 
-    public void setImpuesto(double Impuesto) {
-        this.Impuesto = Impuesto;
+    public void setDetalles(List<Detalle> detalles) {
+        this.detalles = detalles;
     }
 
-    public double getDescuento() {
-        return Descuento;
-    }
-
-    public void setDescuento(double Descuento) {
-        this.Descuento = Descuento;
-    }
-
-    public List<Producto> getProductos() {
-        return productos;
-    }
-
-    public void setProductos(List<Producto> productos) {
-        this.productos = productos;
-    }
-
+    
     @Override
     public String toString() {
-        return "Factura{" + "id=" + id + ", Fecha=" + Fecha + ", Vendedor=" + Vendedor + ", Total=" + Total + ", SubTotal=" + SubTotal + ", Impuesto=" + Impuesto + ", Descuento=" + Descuento + ", productos=" + productos + '}';
-    }
-
-    public void agregarProducto(Producto producto) {
-        this.productos.add(producto);
-        actualizarTotales();
-    }
-
-    public void actualizarTotales() {
-        SubTotal = 0;
-        for (Producto p : productos) {
-            SubTotal += p.getPrecio() * p.getCantidad();
-        }
-        Impuesto = SubTotal * IMPUESTO;
-        Total = SubTotal + Impuesto;
+        return "Factura{" + "id=" + id + ", Fecha=" + fecha + ", Vendedor=" + vendedor + ", Total=" + total +", Detalles=" + detalles + '}';
     }
 
 }
