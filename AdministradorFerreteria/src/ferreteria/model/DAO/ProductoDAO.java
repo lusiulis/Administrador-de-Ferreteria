@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ProductoDAO {
 
@@ -74,31 +76,30 @@ public class ProductoDAO {
         }
         return Exito;
     }
-
-    public boolean Modificar(Producto nuevo) {
+    
+    public boolean Modificar(Producto nuevo){
         boolean Exito = false;
         
-        try(Connection cnx = gestor.obtenerConexion();){
-            Statement stm = cnx.createStatement();
-            Double longitud =0d;
-            if(nuevo.getLongitud()!=null){
-                longitud=nuevo.getLongitud();
-            }
-            String m =  "UPDATE producto Set Nombre = '" +nuevo.getNombre()
-                        +"', Cantidad = '" + nuevo.getCantidad()
-                        +"', Descripcion = '" + nuevo.getDescripcion()
-                        +"', Precio = '" + nuevo.getPrecio()
-                        +"', Tipo = '" + nuevo.getTipo()
-                        +"', Longitud ='" +longitud
-                        +"', CapacidadTrabajo = '" + nuevo.getCapacidadTrabajo() 
-                        + "' WHERE idProducto = " +nuevo.getId();
-            System.out.println(m);
-            Exito = stm.executeUpdate(m) == 1;         
+        try(Connection cnx = gestor.obtenerConexion();
+            PreparedStatement smt = cnx.prepareStatement(CMD_MODIFICAR)){
+            
+            smt.clearParameters();
+            smt.setString(1, nuevo.getNombre());
+            smt.setInt(2, nuevo.getCantidad());
+            smt.setString(3, nuevo.getDescripcion());
+            smt.setDouble(4, nuevo.getPrecio());
+            smt.setString(5, nuevo.getTipo());
+            smt.setDouble(6, nuevo.getLongitud());
+            smt.setString(7, nuevo.getCapacidadTrabajo());
+            smt.setInt(8, nuevo.getId());
+            
+            Exito = smt.executeUpdate() == 1;
         } catch (SQLException ex) {
             System.err.printf("Excepción: '%s'%n", ex.getMessage());
         }
+        
         return Exito;
-    }  
+    }
 
 
     public boolean Borrar(int i) {
@@ -258,4 +259,7 @@ public class ProductoDAO {
 
     private static final String CMD_LISTARAMBOS
             = "SELECT idProducto, Nombre, Precio, Cantidad, Descripcion, Precio, Tipo, Longitud, CapacidadTrabajo FROM producto where Tipo like ? AND Nombre like ?;";
+
+    private static final String CMD_MODIFICAR
+            = "UPDATE producto Set Nombre = ?, Cantidad = ?, Descripcion = ?, Precio =  ?, Tipo = ?, Longitud = ?, CapacidadTrabajo = ? WHERE idProducto = ?;";
 }
