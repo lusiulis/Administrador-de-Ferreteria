@@ -367,7 +367,6 @@ public class VentanaFacturacion extends javax.swing.JFrame implements Observer {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         if (tablaArticulos.getSelectedRow() != -1) {
-            //gestor.eliminarArticulo((String) tablaArticulos.getValueAt(tablaArticulos.getSelectedRow(), 0));
             gestor.eliminarArticuloDeFactura(tablaArticulos.getSelectedRow());
         }
 
@@ -477,6 +476,9 @@ public class VentanaFacturacion extends javax.swing.JFrame implements Observer {
     public void update(Observable o, Object arg) {
         if (arg instanceof Factura) {
             actualizoFactura((Factura) arg);
+        }
+        if(arg instanceof String){
+            lblMensaje.setText((String)arg);
         }
     }
 
