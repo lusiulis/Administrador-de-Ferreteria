@@ -1,12 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ferreteria.views;
 
 import ferrateria.control.ControlFerreteria;
-import ferreteria.model.DAO.ProductoDAO;
 import ferreteria.model.entidades.Producto;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -15,10 +9,6 @@ import java.util.Observer;
 import javax.swing.JOptionPane;
 import static javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE;
 
-/**
- *
- * @author Kevin
- */
 public class VentanaCrearOModificar extends javax.swing.JFrame implements Observer {
 
     private ControlFerreteria gestor;
