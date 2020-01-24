@@ -102,8 +102,8 @@ public class VentanaFacturacion extends javax.swing.JFrame implements Observer {
         MenuArchivo = new javax.swing.JMenu();
         itemSalir = new javax.swing.JMenuItem();
         MenuInventario = new javax.swing.JMenu();
-        itemLlenarInventario = new javax.swing.JMenuItem();
         itemEditarInventario = new javax.swing.JMenuItem();
+        itemLlenarInventario = new javax.swing.JMenuItem();
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -296,14 +296,6 @@ public class VentanaFacturacion extends javax.swing.JFrame implements Observer {
 
         MenuInventario.setText("Inventario");
 
-        itemLlenarInventario.setText("Llenar Inventario");
-        itemLlenarInventario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemLlenarInventarioActionPerformed(evt);
-            }
-        });
-        MenuInventario.add(itemLlenarInventario);
-
         itemEditarInventario.setText("Editar");
         itemEditarInventario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -311,6 +303,14 @@ public class VentanaFacturacion extends javax.swing.JFrame implements Observer {
             }
         });
         MenuInventario.add(itemEditarInventario);
+
+        itemLlenarInventario.setText("Llenar Inventario");
+        itemLlenarInventario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemLlenarInventarioActionPerformed(evt);
+            }
+        });
+        MenuInventario.add(itemLlenarInventario);
 
         Menu.add(MenuInventario);
 
@@ -410,7 +410,11 @@ public class VentanaFacturacion extends javax.swing.JFrame implements Observer {
     }//GEN-LAST:event_txfVendedorActionPerformed
 
     private void itemLlenarInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemLlenarInventarioActionPerformed
-        gestor.LlenarInvantario();
+        if (JOptionPane.showConfirmDialog(null, "¿Desea popular la base de datos?\nEsta opcion solo funciona si la base de datos se encuentra vacia.", "Confirmación",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE) == JOptionPane.YES_OPTION) {
+            gestor.LlenarInvantario();
+        }
     }//GEN-LAST:event_itemLlenarInventarioActionPerformed
 
     /**
@@ -481,8 +485,8 @@ public class VentanaFacturacion extends javax.swing.JFrame implements Observer {
         if (arg instanceof Factura) {
             actualizoFactura((Factura) arg);
         }
-        if(arg instanceof String){
-            lblMensaje.setText((String)arg);
+        if (arg instanceof String) {
+            lblMensaje.setText((String) arg);
         }
     }
 
@@ -492,7 +496,7 @@ public class VentanaFacturacion extends javax.swing.JFrame implements Observer {
 
         //actualizar lista
         actualizarListaProductos(facturaNueva.getDetalles());
-        
+
         //reset campos
         txfCantidad.setValue(1);
         txfCodigoArticulo.setText("");
@@ -505,7 +509,7 @@ public class VentanaFacturacion extends javax.swing.JFrame implements Observer {
             Object[] datos = {p.getNombre(), d.getCantidad(), p.getPrecio(), p.getPrecio() * d.getCantidad()};
             modeloTabla.addRow(datos);
         }
+
     }
 
-    
 }
