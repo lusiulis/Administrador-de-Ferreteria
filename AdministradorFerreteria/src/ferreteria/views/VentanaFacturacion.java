@@ -102,6 +102,7 @@ public class VentanaFacturacion extends javax.swing.JFrame implements Observer {
         MenuArchivo = new javax.swing.JMenu();
         itemSalir = new javax.swing.JMenuItem();
         MenuInventario = new javax.swing.JMenu();
+        itemLlenarInventario = new javax.swing.JMenuItem();
         itemEditarInventario = new javax.swing.JMenuItem();
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -295,6 +296,14 @@ public class VentanaFacturacion extends javax.swing.JFrame implements Observer {
 
         MenuInventario.setText("Inventario");
 
+        itemLlenarInventario.setText("Llenar Inventario");
+        itemLlenarInventario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemLlenarInventarioActionPerformed(evt);
+            }
+        });
+        MenuInventario.add(itemLlenarInventario);
+
         itemEditarInventario.setText("Editar");
         itemEditarInventario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -400,6 +409,10 @@ public class VentanaFacturacion extends javax.swing.JFrame implements Observer {
         // TODO add your handling code here:
     }//GEN-LAST:event_txfVendedorActionPerformed
 
+    private void itemLlenarInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemLlenarInventarioActionPerformed
+        gestor.LlenarInvantario();
+    }//GEN-LAST:event_itemLlenarInventarioActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -444,6 +457,7 @@ public class VentanaFacturacion extends javax.swing.JFrame implements Observer {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnVender;
     private javax.swing.JMenuItem itemEditarInventario;
+    private javax.swing.JMenuItem itemLlenarInventario;
     private javax.swing.JMenuItem itemSalir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;

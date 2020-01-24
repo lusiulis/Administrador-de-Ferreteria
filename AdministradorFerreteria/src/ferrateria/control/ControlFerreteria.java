@@ -92,4 +92,8 @@ public class ControlFerreteria {
     private void iniciarContadorTransacciones(){
         modelo.iniciarContadorTransacciones();
     }
+    
+    public void LlenarInvantario(){
+        modelo.LlenarInventario();
+    }
 }

@@ -37,6 +37,12 @@ public class ModeloFerreteria extends Observable {
         notifyObservers(facturaActual);
     }
 
+    public void LlenarInventario(){
+        ProductoDAO.getInstancia().LLenarInventario();
+        setChanged();
+        notifyObservers();
+    }
+    
     public void cancelarFactura() {
         facturaActual = new Factura();
         setChanged();

@@ -37,7 +37,7 @@ public class ProductoDAO {
 
         boolean Exito = false;
         try (Connection cnx = gestor.obtenerConexion();
-                PreparedStatement stm = cnx.prepareStatement(CMD_AGREGARMATERIAL);) {
+             PreparedStatement stm = cnx.prepareStatement(CMD_AGREGARMATERIAL);) {
 
             stm.clearParameters();
             stm.setString(1, nuevo.getNombre());
@@ -57,7 +57,7 @@ public class ProductoDAO {
     public boolean AgregarHerramienta(Producto nuevo) {
         boolean Exito = false;
         try (Connection cnx = gestor.obtenerConexion();
-                PreparedStatement stm = cnx.prepareStatement(CMD_AGREGARHERRAMIENTA);) {
+             PreparedStatement stm = cnx.prepareStatement(CMD_AGREGARHERRAMIENTA);) {
 
             stm.clearParameters();
             stm.setString(1, nuevo.getNombre());
@@ -67,6 +67,19 @@ public class ProductoDAO {
             stm.setString(5, nuevo.getTipo());
             stm.setString(6, nuevo.getCapacidadTrabajo());
 
+            Exito = stm.executeUpdate() == 1;
+        } catch (SQLException ex) {
+            System.err.printf("Excepción: '%s'%n", ex.getMessage());
+        }
+        return Exito;
+    }
+    
+    public boolean LLenarInventario(){
+        boolean Exito = false;
+        try (Connection cnx = gestor.obtenerConexion();
+             PreparedStatement stm = cnx.prepareStatement(CMD_LLENARINVENTARIO);) {
+
+            stm.clearParameters();
             Exito = stm.executeUpdate() == 1;
         } catch (SQLException ex) {
             System.err.printf("Excepción: '%s'%n", ex.getMessage());
@@ -259,4 +272,21 @@ public class ProductoDAO {
 
     private static final String CMD_MODIFICAR
             = "UPDATE producto Set Nombre = ?, Cantidad = ?, Descripcion = ?, Precio =  ?, Tipo = ?, Longitud = ?, CapacidadTrabajo = ? WHERE idProducto = ?;";
+    
+    private static final String CMD_LLENARINVENTARIO
+            = "INSERT into producto (idProducto,Nombre,Cantidad,Descripcion,Precio,Tipo,Longitud,CapacidadTrabajo) VALUES \n" +
+            "('2','Clavos','10','Kilos de Clavos','2000','Material','13',null),\n" +
+            "('3','Martillo','13','Martillo Pioner','11150','Herramienta',null,'Mediano'),\n" +
+            "('4','Clavos','20','Kilos de Clavos','1500','Material','5.5',null),\n" +
+            "('5','Tornillos','15','Kilos de Tornillos','1000','Material','2.5',null),\n" +
+            "('6','Pala','50','Pala de desagues','10000','Herramienta',null,'Liviano'),\n" +
+            "('7','Hacha','13','Hacha de acero inoxidable','15000','Herramienta',null,'Mediano'),\n" +
+            "('8','Clavos','50','Kilos de Clavos de acero','5000','Material','15.5',null),\n" +
+            "('9','Tornillos','25','Kilos de tornillos de acero','5000','Material','15.5',null),\n" +
+            "('10','Hacha','13','Hacha de acero inoxidable','15000','Herramienta',null,'Mediano'),\n" +
+            "('11','Pico','30','Pico Pioner','20000','Herramienta',null,'Pesado'),\n" +
+            "('12','Mazo','35','Mazo para destruccion','20000','Herramienta',null,'Pesado'),\n" +
+            "('13','Taladro','23','Taladro electrico con kit de brocas','20000','Herramienta',null,'Liviano'),\n" +
+            "('14','Maquina de soldar','10','Maquina de soldar Pioner','20000','Herramienta',null,'Pesado'),\n" +
+            "('15','Clavos','33','Kilos de Clavos de acero','10000','Material','25.5',null)";
 }

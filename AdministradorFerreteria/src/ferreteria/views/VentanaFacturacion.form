@@ -54,6 +54,14 @@
             <Property name="text" type="java.lang.String" value="Inventario"/>
           </Properties>
           <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="itemLlenarInventario">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Llenar Inventario"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itemLlenarInventarioActionPerformed"/>
+              </Events>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="itemEditarInventario">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Editar"/>
